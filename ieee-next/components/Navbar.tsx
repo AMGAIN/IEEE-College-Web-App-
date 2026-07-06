@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, Menu, X } from "lucide-react";
+import EEC_IEEE from "../public/EEC_IEEE.png";
+import IEEE from "../public/IEEE.png";
+import Image from "next/image";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -25,12 +28,7 @@ const Navbar = () => {
           <div className="h-16 flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <span className="font-black text-2xl text-white">
-                IEEE
-                <span className="ml-2 text-sm font-semibold tracking-widest text-white/70">
-                  EEC
-                </span>
-              </span>
+              < Image src={EEC_IEEE} className="w-45" alt="student branch logo"/>
             </Link>
 
             {/* Desktop Menu */}
