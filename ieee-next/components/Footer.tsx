@@ -25,19 +25,37 @@ const Footer = () => {
               </p>
               <div className="flex gap-3">
                 {[
-                  { Icon: FaFacebook, label: "Facebook" },
-                  { Icon: FaInstagram, label: "Instagram" },
-                  { Icon: FaLinkedin, label: "LinkedIn" },
-                ].map(({ Icon, label }) => (
-                  <a
-                    key={label}
-                    href="#"
-                    aria-label={label}
-                    className="w-9 h-9 bg-gray-800 hover:bg-[#00629B] rounded-lg flex items-center justify-center transition-colors"
-                  >
-                    <Icon className="w-4 h-4 text-white" />
-                  </a>
-                ))}
+                  {
+                    icon: FaFacebook,
+                    label: "Facebook",
+                    link: "https://www.facebook.com/profile.php?id=61591174528347",
+                  },
+                  {
+                    icon: FaInstagram,
+                    label: "Instagram",
+                    link: "https://www.instagram.com/ieee.eec_student_branch/",
+                  },
+                  {
+                    icon: FaLinkedin,
+                    label: "LinkedIn",
+                    link: "https://www.linkedin.com/company/ieee-eec-sc/about/",
+                  },
+                ].map((item, index) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <a
+                      key={index}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.label}
+                      className="w-9 h-9 bg-gray-800 hover:bg-[#00629B] rounded-lg flex items-center justify-center transition-colors"
+                    >
+                      <item.icon className="w-4 h-4 text-white" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
 
