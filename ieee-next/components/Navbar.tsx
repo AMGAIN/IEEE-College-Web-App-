@@ -29,7 +29,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="flex items-center text-white">
               {/* < Image src={EEC_IEEE} className="w-45" alt="student branch logo"/> */}
-              EEC-IEEE logo
+              EEC-IEEE logo 'change1'
             </Link>
 
             {/* Desktop Menu */}
