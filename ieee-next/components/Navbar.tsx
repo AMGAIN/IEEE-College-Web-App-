@@ -27,8 +27,9 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-5">
           <div className="h-16 flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
-              < Image src={EEC_IEEE} className="w-45" alt="student branch logo"/>
+            <Link href="/" className="flex items-center text-white">
+              {/* < Image src={EEC_IEEE} className="w-45" alt="student branch logo"/> */}
+              EEC-IEEE logo
             </Link>
 
             {/* Desktop Menu */}
