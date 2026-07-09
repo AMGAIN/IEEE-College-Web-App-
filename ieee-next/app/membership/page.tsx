@@ -173,19 +173,88 @@ export default function Membership() {
             className="space-y-6"
           >
             {STEPS.map((s, i) => (
-              <motion.div
-                key={s.step}
-                className="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm flex gap-5 items-start"
-              >
-                <div className="w-12 h-12 bg-[#00629B] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-black text-sm">{s.step}</span>
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 dark:text-white mb-1">{s.title}</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{s.description}</p>
-                </div>
-              </motion.div>
-            ))}
+  <motion.div
+    key={s.step}
+    whileHover={{
+      y: -8,
+      scale: 1.02,
+      transition: { duration: 0.25 },
+    }}
+    className="
+      group
+      relative
+      overflow-hidden
+      rounded-2xl
+      p-6
+      bg-gradient-to-br
+      from-[#062B52]
+      via-[#0A3D73]
+      to-[#00629B]
+      border border-blue-700/40
+      shadow-lg
+      hover:shadow-blue-900/40
+      transition-all
+      duration-300
+      flex
+      gap-5
+      items-start
+    "
+  >
+    {/* Background Glow */}
+    <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
+
+    {/* Step Number */}
+    <div
+      className="
+        relative
+        z-10
+        w-14
+        h-14
+        rounded-xl
+        bg-white/10
+        backdrop-blur-sm
+        border border-white/10
+        flex
+        items-center
+        justify-center
+        flex-shrink-0
+        transition-all
+        duration-300
+        group-hover:bg-white
+      "
+    >
+      <span className="text-lg font-black text-white group-hover:text-[#00629B]">
+        {s.step}
+      </span>
+    </div>
+
+    {/* Content */}
+    <div className="relative z-10">
+      <h3 className="text-xl font-bold text-white mb-2">
+        {s.title}
+      </h3>
+
+      <p className="text-blue-100 text-sm leading-relaxed">
+        {s.description}
+      </p>
+    </div>
+
+    {/* Bottom Accent */}
+    <div
+      className="
+        absolute
+        bottom-0
+        left-0
+        h-1
+        w-0
+        bg-white
+        group-hover:w-full
+        transition-all
+        duration-300
+      "
+    />
+  </motion.div>
+))}
           </motion.div>
 
           <motion.div
