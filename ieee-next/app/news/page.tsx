@@ -25,7 +25,6 @@ export default function News() {
         <PageHero
           title="Latest News"
           label="News"
-          image="/images/about-hero.jpg"
           description="Stay up to date with the latest achievements, announcements, and event recaps from the IEEE EEC Student Branch."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

@@ -31,7 +31,6 @@ export default function Events() {
         <PageHero
           title="Events & Workshops"
           label="Events"
-          image="/images/about-hero.jpg"
           description="From technical workshops to competitive hackathons and industry conferences — explore all IEEE EEC events past, present, and upcoming."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

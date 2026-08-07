@@ -22,7 +22,6 @@ export default function Gallery() {
         <PageHero
           title="Gallery"
           label="Gallery"
-          image="/images/about-hero.jpg"
           description="A visual journey through IEEE EEC's workshops, events, competitions, and community moments."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

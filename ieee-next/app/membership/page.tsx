@@ -63,7 +63,6 @@ export default function Membership() {
         <PageHero
           title="Join IEEE"
           label="Membership"
-          image="/images/about-hero.jpg"
           description="Become part of the world's largest technical professional organization and unlock a lifetime of opportunities, resources, and global connections."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

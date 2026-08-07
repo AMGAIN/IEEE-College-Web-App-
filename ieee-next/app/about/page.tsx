@@ -39,7 +39,6 @@ export default function About() {
         <PageHero
           title="About IEEE EEC"
           label="About"
-          image="/images/about-hero.jpg"
           description="Learn more about IEEE Everest Engineering College Student Branch."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

@@ -23,7 +23,6 @@ export default function Committee() {
         <PageHero
           title="Our Team"
           label="Team"
-          image="/images/about-hero.jpg"
           description="Meet the dedicated students and faculty who lead the IEEE EEC Student Branch, organizing events, driving initiatives, and representing our community."
         />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">

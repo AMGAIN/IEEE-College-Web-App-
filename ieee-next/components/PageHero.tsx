@@ -1,17 +1,15 @@
 import React from "react";
 interface PageHeroProps {
   title: string;
-  image: string;
   label: string;
   description: string;
 }
-const PageHero = ({ title, image, label, description }: PageHeroProps) => {
+const PageHero = ({ title, label, description }: PageHeroProps) => {
   return (
-    <section className="relative py-32 lg:py-40 flex items-center overflow-hidden">
+    <section className="relative py-32 lg:py-30 flex items-center overflow-hidden">
       <div
         className="absolute inset-0 bg-[#001220]"
         style={{
-          backgroundImage: `url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
