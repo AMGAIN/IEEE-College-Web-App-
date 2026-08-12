@@ -6,9 +6,10 @@ import { EventModule } from './module/event/event.module';
 import { NewsModule } from './module/news/news.module';
 import { TeamModule } from './module/team/team.module';
 import { MembershipModule } from './module/membership/membership.module';
+import { HomeModule } from './module/home/home.module';
 
 @Module({
-  imports: [GalleryModule, EventModule, NewsModule, TeamModule, MembershipModule],
+  imports: [GalleryModule, EventModule, NewsModule, TeamModule, MembershipModule, HomeModule],
   controllers: [AppController],
   providers: [AppService],
 })
