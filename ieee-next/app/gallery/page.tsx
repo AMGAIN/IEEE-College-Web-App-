@@ -1,20 +1,53 @@
-'use client'
-import { useState } from "react";
+'use client';
+
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
-import { GALLERY_IMAGES } from "@/Data";
 import PageHero from "@/components/PageHero";
+import { getGallery } from "@/services/gallery.service";
 
-const CATEGORIES = ["All", "IEEE Events", "Students", "Workshops", "Coding Competitions"];
+type GalleryImage = {
+  id: string | number;
+  src: string;
+  alt: string;
+  category: string;
+};
+
+const CATEGORIES = [
+  "All",
+  "IEEE Events",
+  "Students",
+  "Workshops",
+  "Coding Competitions"
+];
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [lightbox, setLightbox] = useState<null | (typeof GALLERY_IMAGES)[0]>(null);
+  const [lightbox, setLightbox] = useState<GalleryImage | null>(null);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        const data = await getGallery();
+
+        console.log("Gallery data:", data); 
+
+        setGalleryImages(data);
+      } catch (error) {
+        console.error("Failed to load gallery:", error);
+      }
+    }
+
+    loadGallery();
+  }, []);
 
   const filtered =
     activeCategory === "All"
-      ? GALLERY_IMAGES
-      : GALLERY_IMAGES.filter((img) => img.category === activeCategory);
+      ? galleryImages
+      : galleryImages.filter(
+          (img) => img.category === activeCategory
+        );
 
   return (
     <>
@@ -24,13 +57,8 @@ export default function Gallery() {
           label="Gallery"
           description="A visual journey through IEEE EEC's workshops, events, competitions, and community moments."
         />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.5 }}
-          >
-          </motion.div>
 
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">
           {/* Category Filter */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -41,10 +69,11 @@ export default function Gallery() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${activeCategory === cat
-                  ? "bg-[#00629B] text-white shadow-md"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  }`}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                  activeCategory === cat
+                    ? "bg-[#00629B] text-white shadow-md"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`}
               >
                 {cat}
               </button>
@@ -63,11 +92,21 @@ export default function Gallery() {
                 onClick={() => setLightbox(img)}
                 className="relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-video group cursor-pointer"
               >
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                   <div>
-                    <p className="text-white text-xs font-semibold">{img.alt}</p>
-                    <p className="text-white/70 text-xs">{img.category}</p>
+                    <p className="text-white text-xs font-semibold">
+                      {img.alt}
+                    </p>
+                    <p className="text-white/70 text-xs">
+                      {img.category}
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -92,6 +131,7 @@ export default function Gallery() {
           >
             <X className="w-6 h-6" />
           </button>
+
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -99,10 +139,20 @@ export default function Gallery() {
             onClick={(e) => e.stopPropagation()}
             className="max-w-4xl w-full rounded-2xl overflow-hidden bg-gray-900"
           >
-            <img src={lightbox.src.replace("w=600&h=420", "w=1200&h=800")} alt={lightbox.alt} className="w-full" />
+            <img
+              src={lightbox.src.replace(
+                "w=600&h=420",
+                "w=1200&h=800"
+              )}
+              alt={lightbox.alt}
+              className="w-full"
+            />
+
             <div className="p-4">
               <p className="text-white font-semibold">{lightbox.alt}</p>
-              <p className="text-gray-400 text-sm">{lightbox.category}</p>
+              <p className="text-gray-400 text-sm">
+                {lightbox.category}
+              </p>
             </div>
           </motion.div>
         </div>

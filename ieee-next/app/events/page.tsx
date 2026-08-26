@@ -1,40 +1,97 @@
-'use client'
-import { useState } from "react";
+'use client';
+
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, ArrowRight } from "lucide-react";
-import { EVENTS } from "@/Data";
 import PageHero from "@/components/PageHero";
+import { getEvent } from "@/services/event.service";
+
+type Event = {
+  id: string | number;
+  image: string;
+  title: string;
+  category: string;
+  status: string;
+  date: string;
+  time: string;
+  venue: string;
+  description: string;
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut" },
+  },
 };
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } } };
 
-const CATEGORIES = ["All", "Conference", "Workshop", "Seminar", "Competition"];
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.09 },
+  },
+};
+
+const CATEGORIES = [
+  "All",
+  "Conference",
+  "Workshop",
+  "Seminar",
+  "Competition",
+];
+
 const FILTERS = ["All", "Upcoming", "Past"];
 
 export default function Events() {
+  // Filter states
   const [category, setCategory] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
 
-  const filtered = EVENTS.filter((e) => {
-    const catMatch = category === "All" || e.category === category;
-    const statusMatch = statusFilter === "All" || e.status === statusFilter.toLowerCase();
+  // Events received from the backend
+  const [events, setEvents] = useState<Event[]>([]);
+
+  // Fetch events when the page loads
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const data = await getEvent();
+
+        console.log("Events received:", data);
+
+        setEvents(data);
+      } catch (error) {
+        console.error("Failed to load events:", error);
+      }
+    }
+
+    loadEvents();
+  }, []);
+
+  // Filter backend events according to the selected filters
+  const filtered = events.filter((e) => {
+    const catMatch =
+      category === "All" || e.category === category;
+
+    const statusMatch =
+      statusFilter === "All" ||
+      e.status === statusFilter.toLowerCase();
+
     return catMatch && statusMatch;
   });
 
   return (
     <>
-
-      <section className=" bg-background">
+      <section className="bg-background">
         <PageHero
           title="Events & Workshops"
           label="Events"
           description="From technical workshops to competitive hackathons and industry conferences — explore all IEEE EEC events past, present, and upcoming."
         />
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">
-          <motion.div initial="hidden" >
+          <motion.div initial="hidden">
           </motion.div>
 
           {/* Filters */}
@@ -42,29 +99,34 @@ export default function Events() {
             initial="hidden"
             className="flex flex-col sm:flex-row gap-4 mb-10"
           >
+            {/* Status Filters */}
             <div className="flex flex-wrap gap-2">
               {FILTERS.map((f) => (
                 <button
                   key={f}
                   onClick={() => setStatusFilter(f)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${statusFilter === f
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                    statusFilter === f
                       ? "bg-[#00629B] text-white shadow-md"
                       : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    }`}
+                  }`}
                 >
                   {f}
                 </button>
               ))}
             </div>
+
+            {/* Category Filters */}
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((c) => (
                 <button
                   key={c}
                   onClick={() => setCategory(c)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${category === c
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
+                    category === c
                       ? "border-[#00629B] bg-blue-50 dark:bg-blue-950/50 text-[#00629B] dark:text-blue-400"
                       : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-[#00629B] hover:text-[#00629B]"
-                    }`}
+                  }`}
                 >
                   {c}
                 </button>
@@ -81,14 +143,20 @@ export default function Events() {
             <motion.div
               variants={stagger}
               initial="hidden"
+              animate="visible"
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filtered.map((event) => (
                 <motion.article
                   key={event.id}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  variants={fadeUp}
+                  whileHover={{
+                    y: -5,
+                    transition: { duration: 0.2 },
+                  }}
                   className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col"
                 >
+                  {/* Event Image */}
                   <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
                     <img
                       src={event.image}
@@ -96,35 +164,52 @@ export default function Events() {
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
+
                     <div className="absolute top-3 left-3 flex gap-2">
                       <span className="px-2.5 py-1 bg-[#00629B] text-white text-xs font-bold rounded-full">
                         {event.category}
                       </span>
+
                       <span
-                        className={`px-2.5 py-1 text-xs font-bold rounded-full ${event.status === "upcoming"
+                        className={`px-2.5 py-1 text-xs font-bold rounded-full ${
+                          event.status === "upcoming"
                             ? "bg-green-500 text-white"
                             : "bg-gray-500 text-white"
-                          }`}
+                        }`}
                       >
-                        {event.status === "upcoming" ? "Upcoming" : "Past"}
+                        {event.status === "upcoming"
+                          ? "Upcoming"
+                          : "Past"}
                       </span>
                     </div>
                   </div>
+
+                  {/* Event Details */}
                   <div className="p-5 flex-1 flex flex-col gap-2">
-                    <h3 className="font-bold text-gray-900 dark:text-white text-base leading-snug">{event.title}</h3>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base leading-snug">
+                      {event.title}
+                    </h3>
+
                     <div className="space-y-1.5">
                       {[
                         { Icon: Calendar, text: event.date },
                         { Icon: Clock, text: event.time },
                         { Icon: MapPin, text: event.venue },
-                      ].map(({ Icon, text }) => (
-                        <div key={text} className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                      ].map(({ Icon, text }, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+                        >
                           <Icon className="w-3.5 h-3.5 text-[#00629B] flex-shrink-0" />
                           <span>{text}</span>
                         </div>
                       ))}
                     </div>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed flex-1">{event.description}</p>
+
+                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed flex-1">
+                      {event.description}
+                    </p>
+
                     {event.status === "upcoming" && (
                       <a
                         href="https://www.ieee.org/membership/join"
@@ -132,7 +217,8 @@ export default function Events() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 mt-2 text-[#00629B] dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all"
                       >
-                        Register Now <ArrowRight className="w-3.5 h-3.5" />
+                        Register Now
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </a>
                     )}
                   </div>
