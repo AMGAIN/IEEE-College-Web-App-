@@ -1,8 +1,10 @@
 'use client'
+
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Globe, BookOpen, Award, Star, Users, Zap } from "lucide-react";
-import { BENEFITS } from "@/Data";
 import PageHero from "@/components/PageHero";
+import { getMembershipBenifits } from "@/services/membership.service";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -12,6 +14,11 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 
 const BENEFIT_ICONS = [Globe, BookOpen, Award, Star, Users, Zap];
 
+type Benefit = {
+  id: string | number;
+  title: string;
+  description: string;
+}
 const STEPS = [
   {
     step: "01",
@@ -55,6 +62,25 @@ const FAQS = [
 ];
 
 export default function Membership() {
+  const [benefit, setBenefit] = useState<Benefit[]>([]);
+
+  // Fetch benifits when the page loads
+  useEffect(() => {
+    async function loadBenifits() {
+      try {
+        const data = await getMembershipBenifits();
+
+        console.log("Benefits received:", data);
+
+        setBenefit(data);
+      } catch (error) {
+        console.error("Failed to load events:", error);
+      }
+    }
+
+    loadBenifits();
+  }, []);
+
   return (
     <>
 
@@ -75,7 +101,7 @@ export default function Membership() {
             initial="hidden"
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {BENEFITS.map((b, i) => {
+            {benefit.map((b, i) => {
               const Icon = BENEFIT_ICONS[i] || Globe;
 
               return (
@@ -101,8 +127,7 @@ export default function Membership() {
         hover:shadow-blue-900/40
         transition-all
         duration-300
-      "
-                >
+      ">
                   {/* Decorative Glow */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
 
@@ -172,14 +197,14 @@ export default function Membership() {
             className="space-y-6"
           >
             {STEPS.map((s, i) => (
-  <motion.div
-    key={s.step}
-    whileHover={{
-      y: -8,
-      scale: 1.02,
-      transition: { duration: 0.25 },
-    }}
-    className="
+              <motion.div
+                key={s.step}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  transition: { duration: 0.25 },
+                }}
+                className="
       group
       relative
       overflow-hidden
@@ -198,13 +223,13 @@ export default function Membership() {
       gap-5
       items-start
     "
-  >
-    {/* Background Glow */}
-    <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
+              >
+                {/* Background Glow */}
+                <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
 
-    {/* Step Number */}
-    <div
-      className="
+                {/* Step Number */}
+                <div
+                  className="
         relative
         z-10
         w-14
@@ -221,26 +246,26 @@ export default function Membership() {
         duration-300
         group-hover:bg-white
       "
-    >
-      <span className="text-lg font-black text-white group-hover:text-[#00629B]">
-        {s.step}
-      </span>
-    </div>
+                >
+                  <span className="text-lg font-black text-white group-hover:text-[#00629B]">
+                    {s.step}
+                  </span>
+                </div>
 
-    {/* Content */}
-    <div className="relative z-10">
-      <h3 className="text-xl font-bold text-white mb-2">
-        {s.title}
-      </h3>
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {s.title}
+                  </h3>
 
-      <p className="text-blue-100 text-sm leading-relaxed">
-        {s.description}
-      </p>
-    </div>
+                  <p className="text-blue-100 text-sm leading-relaxed">
+                    {s.description}
+                  </p>
+                </div>
 
-    {/* Bottom Accent */}
-    <div
-      className="
+                {/* Bottom Accent */}
+                <div
+                  className="
         absolute
         bottom-0
         left-0
@@ -251,9 +276,9 @@ export default function Membership() {
         transition-all
         duration-300
       "
-    />
-  </motion.div>
-))}
+                />
+              </motion.div>
+            ))}
           </motion.div>
 
           <motion.div

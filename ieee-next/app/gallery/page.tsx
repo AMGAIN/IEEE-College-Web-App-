@@ -31,7 +31,7 @@ export default function Gallery() {
       try {
         const data = await getGallery();
 
-        console.log("Gallery data:", data); 
+        console.log("Gallery data:", data);
 
         setGalleryImages(data);
       } catch (error) {
@@ -46,8 +46,8 @@ export default function Gallery() {
     activeCategory === "All"
       ? galleryImages
       : galleryImages.filter(
-          (img) => img.category === activeCategory
-        );
+        (img) => img.category === activeCategory
+      );
 
   return (
     <>
@@ -69,11 +69,10 @@ export default function Gallery() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                  activeCategory === cat
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${activeCategory === cat
                     ? "bg-[#00629B] text-white shadow-md"
                     : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
+                  }`}
               >
                 {cat}
               </button>

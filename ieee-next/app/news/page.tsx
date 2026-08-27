@@ -1,9 +1,19 @@
 'use client'
-import { useState } from "react";
-import { motion } from "framer-motion"; 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { NEWS } from "@/Data";
 import PageHero from "@/components/PageHero";
+import { getNews } from "@/services/news.service";
+
+type NewsArticle = {
+  id: number;
+  image: string;
+  title: string;
+  category: string;
+  date: string;
+  excerpt: string;
+  content: string;
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -11,13 +21,30 @@ const fadeUp = {
 };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } } };
 
-const CATEGORIES = ["All", ...Array.from(new Set(NEWS.map((n) => n.category)))];
 
 export default function News() {
   const [category, setCategory] = useState("All");
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [news, setNews] = useState<NewsArticle[]>([]);
 
-  const filtered = category === "All" ? NEWS : NEWS.filter((n) => n.category === category);
+  useEffect(() => {
+    async function loadNews() {
+      try {
+        const data = await getNews();
+        setNews(data);
+      } catch (error) {
+        console.error("Failed to load news:", error);
+      }
+    }
+
+    loadNews();
+  }, []);
+  const CATEGORIES = [
+    "All",
+    ...Array.from(new Set(news.map((n) => n.category))),
+  ];
+  const filtered = category === "All" ? news : news.filter((n) => n.category === category);
+
 
   return (
     <>
@@ -40,11 +67,10 @@ export default function News() {
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                  category === cat
-                    ? "bg-[#00629B] text-white shadow-md"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${category === cat
+                  ? "bg-[#00629B] text-white shadow-md"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`}
               >
                 {cat}
               </button>

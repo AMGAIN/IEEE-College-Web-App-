@@ -105,11 +105,10 @@ export default function Events() {
                 <button
                   key={f}
                   onClick={() => setStatusFilter(f)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                    statusFilter === f
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${statusFilter === f
                       ? "bg-[#00629B] text-white shadow-md"
                       : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  }`}
+                    }`}
                 >
                   {f}
                 </button>
@@ -122,11 +121,10 @@ export default function Events() {
                 <button
                   key={c}
                   onClick={() => setCategory(c)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
-                    category === c
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${category === c
                       ? "border-[#00629B] bg-blue-50 dark:bg-blue-950/50 text-[#00629B] dark:text-blue-400"
                       : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-[#00629B] hover:text-[#00629B]"
-                  }`}
+                    }`}
                 >
                   {c}
                 </button>
@@ -149,7 +147,6 @@ export default function Events() {
               {filtered.map((event) => (
                 <motion.article
                   key={event.id}
-                  variants={fadeUp}
                   whileHover={{
                     y: -5,
                     transition: { duration: 0.2 },
@@ -171,11 +168,10 @@ export default function Events() {
                       </span>
 
                       <span
-                        className={`px-2.5 py-1 text-xs font-bold rounded-full ${
-                          event.status === "upcoming"
+                        className={`px-2.5 py-1 text-xs font-bold rounded-full ${event.status === "upcoming"
                             ? "bg-green-500 text-white"
                             : "bg-gray-500 text-white"
-                        }`}
+                          }`}
                       >
                         {event.status === "upcoming"
                           ? "Upcoming"

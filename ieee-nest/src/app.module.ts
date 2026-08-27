@@ -7,9 +7,10 @@ import { NewsModule } from './module/news/news.module';
 import { TeamModule } from './module/team/team.module';
 import { MembershipModule } from './module/membership/membership.module';
 import { HomeModule } from './module/home/home.module';
+import { AboutModule } from './module/about/about.module';
 
 @Module({
-  imports: [GalleryModule, EventModule, NewsModule, TeamModule, MembershipModule, HomeModule],
+  imports: [GalleryModule, EventModule, NewsModule, TeamModule, MembershipModule, HomeModule, AboutModule],
   controllers: [AppController],
   providers: [AppService],
 })

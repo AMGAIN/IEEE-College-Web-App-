@@ -1,20 +1,73 @@
-'use client'
+'use client';
+
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
-import { COMMITTEE } from "@/Data";
 import PageHero from "@/components/PageHero";
+import { getTeam } from "@/services/team.service";
+
+type TeamMember = {
+  id: string | number;
+  name: string;
+  position: string;
+  department: string;
+  email: string;
+  image: string;
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut" },
+  },
 };
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } } };
 
-const ROLES_ORDER = ["Faculty Advisor", "Chair", "Co-Chair", "Secretary", "Treasurer", "Technical Head", "Event Coordinator", "Webmaster"];
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.09 },
+  },
+};
+
+const ROLES_ORDER = [
+  "Faculty Advisor",
+  "Chair",
+  "Co-Chair",
+  "Secretary",
+  "Treasurer",
+  "Technical Head",
+  "Event Coordinator",
+  "Webmaster",
+];
 
 export default function Committee() {
-  const sorted = [...COMMITTEE].sort(
-    (a, b) => ROLES_ORDER.indexOf(a.position) - ROLES_ORDER.indexOf(b.position)
+  // Store team members received from the backend
+  const [team, setTeam] = useState<TeamMember[]>([]);
+
+  // Fetch team data when the page loads
+  useEffect(() => {
+    async function loadTeam() {
+      try {
+        const data = await getTeam();
+        setTeam(data);
+      } catch (error) {
+        console.error("Failed to load team:", error);
+      }
+    }
+
+    loadTeam();
+  }, []);
+
+  // Sort backend data according to the role order
+  const sorted = [...team].sort(
+    (a, b) =>
+      ROLES_ORDER.indexOf(a.position) -
+      ROLES_ORDER.indexOf(b.position)
   );
+
+  // First member (Faculty Advisor) is featured separately
   const [advisor, ...rest] = sorted;
 
   return (
@@ -25,9 +78,9 @@ export default function Committee() {
           label="Team"
           description="Meet the dedicated students and faculty who lead the IEEE EEC Student Branch, organizing events, driving initiatives, and representing our community."
         />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">
-          <motion.div initial="hidden" >
 
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-10">
+          <motion.div initial="hidden">
           </motion.div>
 
           {/* Faculty Advisor — featured card */}
@@ -44,12 +97,20 @@ export default function Committee() {
                     className="w-full h-full object-cover"
                   />
                 </div>
+
                 <div className="p-6">
                   <span className="inline-block px-2.5 py-0.5 bg-white/20 text-white text-xs font-bold uppercase tracking-widest rounded-full mb-2">
                     {advisor.position}
                   </span>
-                  <h3 className="font-black text-white text-xl mb-1">{advisor.name}</h3>
-                  <p className="text-white/70 text-sm mb-3">{advisor.department}</p>
+
+                  <h3 className="font-black text-white text-xl mb-1">
+                    {advisor.name}
+                  </h3>
+
+                  <p className="text-white/70 text-sm mb-3">
+                    {advisor.department}
+                  </p>
+
                   <a
                     href={`mailto:${advisor.email}`}
                     className="inline-flex items-center gap-1.5 text-white/80 hover:text-white text-sm transition-colors"
@@ -71,7 +132,10 @@ export default function Committee() {
             {rest.map((member) => (
               <motion.div
                 key={member.id}
-                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                whileHover={{
+                  y: -6,
+                  transition: { duration: 0.2 },
+                }}
                 className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm text-center group"
               >
                 <div className="aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -81,12 +145,20 @@ export default function Committee() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
+
                 <div className="p-4">
                   <span className="inline-block px-2 py-0.5 bg-blue-50 dark:bg-blue-950/50 text-[#00629B] dark:text-blue-400 text-xs font-bold rounded-full mb-1.5">
                     {member.position}
                   </span>
-                  <h3 className="font-bold text-gray-900 dark:text-white text-sm leading-snug mb-1">{member.name}</h3>
-                  <p className="text-gray-400 text-xs leading-tight mb-2">{member.department}</p>
+
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm leading-snug mb-1">
+                    {member.name}
+                  </h3>
+
+                  <p className="text-gray-400 text-xs leading-tight mb-2">
+                    {member.department}
+                  </p>
+
                   <a
                     href={`mailto:${member.email}`}
                     className="inline-flex items-center gap-1 text-[#00629B] dark:text-blue-400 text-xs hover:underline"
