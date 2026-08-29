@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GalleryModule } from './module/gallery/gallery.module';
@@ -10,8 +13,27 @@ import { HomeModule } from './module/home/home.module';
 import { AboutModule } from './module/about/about.module';
 
 @Module({
-  imports: [GalleryModule, EventModule, NewsModule, TeamModule, MembershipModule, HomeModule, AboutModule],
+  imports: [
+    // Makes variables from .env available throughout the application
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
+    // Connects NestJS to MongoDB using MONGODB_URI from .env
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
+      }),
+    }),
+    GalleryModule,
+    EventModule,
+    NewsModule,
+    TeamModule,
+    MembershipModule,
+    HomeModule,
+    AboutModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
