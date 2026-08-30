@@ -134,8 +134,8 @@ export default function Events() {
 
           {/* Events Grid */}
           {filtered.length === 0 ? (
-            <div className="text-center py-20 text-gray-400">
-              No events found for the selected filters.
+            <div className="text-center py-20 text-gray-400 text-2xl">
+              No events found
             </div>
           ) : (
             <motion.div
