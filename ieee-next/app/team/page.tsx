@@ -7,21 +7,12 @@ import PageHero from "@/components/PageHero";
 import { getTeam } from "@/services/team.service";
 
 type TeamMember = {
-  id: string | number;
+  _id: string | number;
   name: string;
   position: string;
   department: string;
   email: string;
   image: string;
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: "easeOut" },
-  },
 };
 
 const stagger = {
@@ -61,14 +52,17 @@ export default function Committee() {
   }, []);
 
   // Sort backend data according to the role order
-  const sorted = [...team].sort(
+  const advisor = team.find(
+  (member) => member.position === "Faculty Advisor"
+);
+
+const rest = team
+  .filter((member) => member.position !== "Faculty Advisor")
+  .sort(
     (a, b) =>
       ROLES_ORDER.indexOf(a.position) -
       ROLES_ORDER.indexOf(b.position)
   );
-
-  // First member (Faculty Advisor) is featured separately
-  const [advisor, ...rest] = sorted;
 
   return (
     <>
@@ -131,7 +125,7 @@ export default function Committee() {
           >
             {rest.map((member) => (
               <motion.div
-                key={member.id}
+                key={member._id}
                 whileHover={{
                   y: -6,
                   transition: { duration: 0.2 },

@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import { getNews } from "@/services/news.service";
 
 type NewsArticle = {
-  id: number;
+  _id: number;
   image: string;
   title: string;
   category: string;
@@ -99,14 +99,14 @@ export default function News() {
                 </div>
                 <h2 className="text-xl font-black text-gray-900 dark:text-white mb-3 leading-snug">{filtered[0].title}</h2>
                 <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">
-                  {expanded === filtered[0].id ? filtered[0].content : filtered[0].excerpt}
+                  {expanded === filtered[0]._id ? filtered[0].content : filtered[0].excerpt}
                 </p>
                 <button
-                  onClick={() => setExpanded(expanded === filtered[0].id ? null : filtered[0].id)}
+                  onClick={() => setExpanded(expanded === filtered[0]._id ? null : filtered[0]._id)}
                   className="inline-flex items-center gap-1.5 text-[#00629B] dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all w-fit"
                 >
-                  {expanded === filtered[0].id ? "Show Less" : "Read More"}{" "}
-                  <ArrowRight className={`w-3.5 h-3.5 transition-transform ${expanded === filtered[0].id ? "rotate-180" : ""}`} />
+                  {expanded === filtered[0]._id ? "Show Less" : "Read More"}{" "}
+                  <ArrowRight className={`w-3.5 h-3.5 transition-transform ${expanded === filtered[0]._id ? "rotate-180" : ""}`} />
                 </button>
               </div>
             </motion.article>
@@ -121,7 +121,7 @@ export default function News() {
             >
               {filtered.slice(1).map((article) => (
                 <motion.article
-                  key={article.id}
+                  key={article._id}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col"
                 >
@@ -142,13 +142,13 @@ export default function News() {
                     </div>
                     <h3 className="font-bold text-gray-900 dark:text-white mb-2 leading-snug text-sm">{article.title}</h3>
                     <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed flex-1">
-                      {expanded === article.id ? article.content : article.excerpt}
+                      {expanded === article._id ? article.content : article.excerpt}
                     </p>
                     <button
-                      onClick={() => setExpanded(expanded === article.id ? null : article.id)}
+                      onClick={() => setExpanded(expanded === article._id ? null : article._id)}
                       className="inline-flex items-center gap-1.5 mt-4 text-[#00629B] dark:text-blue-400 font-semibold text-sm hover:gap-3 transition-all"
                     >
-                      {expanded === article.id ? "Show Less" : "Read More"}{" "}
+                      {expanded === article._id ? "Show Less" : "Read More"}{" "}
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>

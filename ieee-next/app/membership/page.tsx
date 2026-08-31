@@ -15,7 +15,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 const BENEFIT_ICONS = [Globe, BookOpen, Award, Star, Users, Zap];
 
 type Benefit = {
-  id: string | number;
+  _id: string | number;
   title: string;
   description: string;
 }
@@ -106,7 +106,7 @@ export default function Membership() {
 
               return (
                 <motion.div
-                  key={b.id}
+                  key={b._id}
                   whileHover={{
                     y: -8,
                     scale: 1.02,

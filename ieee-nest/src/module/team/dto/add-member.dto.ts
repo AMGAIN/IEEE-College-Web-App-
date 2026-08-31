@@ -5,7 +5,7 @@ export class addMemberDto {
     name!: String
 
     @ApiProperty()
-    postition!: String
+    position!: String
 
     @ApiProperty()
     department!: String

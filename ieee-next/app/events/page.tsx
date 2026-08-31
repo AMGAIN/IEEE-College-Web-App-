@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { getEvent } from "@/services/event.service";
 
 type Event = {
-  id: string | number;
+  _id: string | number;
   image: string;
   title: string;
   category: string;
@@ -146,7 +146,7 @@ export default function Events() {
             >
               {filtered.map((event) => (
                 <motion.article
-                  key={event.id}
+                  key={event._id}
                   whileHover={{
                     y: -5,
                     transition: { duration: 0.2 },

@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { getGallery } from "@/services/gallery.service";
 
 type GalleryImage = {
-  id: string | number;
+  _id: string | number;
   src: string;
   alt: string;
   category: string;
@@ -83,7 +83,7 @@ export default function Gallery() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
             {filtered.map((img, i) => (
               <motion.div
-                key={img.id}
+                key={img._id}
                 initial={{ opacity: 0, scale: 0.93 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.35, delay: i * 0.04 }}

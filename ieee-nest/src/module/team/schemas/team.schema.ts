@@ -9,7 +9,7 @@ export class Member{
     name!: String
 
     @Prop({required: true})
-    postition!: String
+    position!: String
 
     @Prop({required: true})
     department!: String
