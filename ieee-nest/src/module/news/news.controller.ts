@@ -1,5 +1,6 @@
-import { Controller , Get} from '@nestjs/common';
+import { Controller , Get, Post, Body} from '@nestjs/common';
 import { NewsService } from './news.service';
+import { createNewsDto } from './dto/create-news.dto';
 
 @Controller('news')
 export class NewsController {
@@ -8,5 +9,10 @@ export class NewsController {
   @Get('')
   getNews(){
     return this.newsService.getNews();
+  }
+
+  @Post('')
+  createNews(@Body() newsData : createNewsDto){
+    return this.newsService.createNews( newsData);
   }
 }
