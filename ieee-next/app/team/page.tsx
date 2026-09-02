@@ -28,8 +28,6 @@ const ROLES_ORDER = [
   "Co-Chair",
   "Secretary",
   "Treasurer",
-  "Technical Head",
-  "Event Coordinator",
   "Webmaster",
 ];
 
@@ -101,9 +99,9 @@ const rest = team
                     {advisor.name}
                   </h3>
 
-                  <p className="text-white/70 text-sm mb-3">
+                  {/* <p className="text-white/70 text-sm mb-3">
                     {advisor.department}
-                  </p>
+                  </p> */}
 
                   <a
                     href={`mailto:${advisor.email}`}
@@ -149,9 +147,9 @@ const rest = team
                     {member.name}
                   </h3>
 
-                  <p className="text-gray-400 text-xs leading-tight mb-2">
+                  {/* <p className="text-gray-400 text-xs leading-tight mb-2">
                     {member.department}
-                  </p>
+                  </p> */}
 
                   <a
                     href={`mailto:${member.email}`}
