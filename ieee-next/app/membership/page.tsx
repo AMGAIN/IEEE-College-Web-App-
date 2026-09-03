@@ -103,7 +103,6 @@ export default function Membership() {
           >
             {benefit.map((b, i) => {
               const Icon = BENEFIT_ICONS[i] || Globe;
-
               return (
                 <motion.div
                   key={b._id}

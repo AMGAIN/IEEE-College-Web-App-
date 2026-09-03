@@ -84,28 +84,36 @@ export default function AdminPage() {
       id: 1,
       title: "IEEE Student Branch Wins Hackathon",
       date: "2026-08-30",
-      description: "Our team successfully participated in the hackathon.",
+      description:
+        "Our team successfully participated in the hackathon.",
     },
   ]);
 
   const sectionInfo = {
     members: {
       title: "Members",
+      description: "Manage IEEE student branch members",
       icon: Users,
       button: "Add Member",
     },
+
     events: {
       title: "Events",
+      description: "Create and manage upcoming events",
       icon: CalendarDays,
       button: "Add Event",
     },
+
     gallery: {
       title: "Gallery",
+      description: "Manage images and event memories",
       icon: ImageIcon,
       button: "Upload Image",
     },
+
     news: {
       title: "News",
+      description: "Create and manage IEEE news",
       icon: Newspaper,
       button: "Add News",
     },
@@ -114,218 +122,267 @@ export default function AdminPage() {
   const current = sectionInfo[section];
   const Icon = current.icon;
 
+  function changeSection(newSection: Section) {
+    setSection(newSection);
+    setShowForm(false);
+  }
+
   function handleDelete(id: number) {
-    if (!confirm("Are you sure you want to delete this item?")) {
-      return;
-    }
+    const confirmed = confirm(
+      "Are you sure you want to delete this item?"
+    );
+
+    if (!confirmed) return;
 
     if (section === "members") {
-      setMembers((prev) => prev.filter((item) => item.id !== id));
+      setMembers((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
     }
 
     if (section === "events") {
-      setEvents((prev) => prev.filter((item) => item.id !== id));
+      setEvents((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
     }
 
     if (section === "gallery") {
-      setGallery((prev) => prev.filter((item) => item.id !== id));
+      setGallery((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
     }
 
     if (section === "news") {
-      setNews((prev) => prev.filter((item) => item.id !== id));
+      setNews((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#F3F7FA]">
 
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-5">
-          <h1 className="text-2xl font-bold text-gray-900">
-            IEEE Admin Panel
-          </h1>
+      {/* ================= HEADER ================= */}
 
-          <p className="text-sm text-gray-500 mt-1">
-            Manage members, events, gallery and news
-          </p>
+      <header className="bg-gradient-to-br from-[#001220] via-[#00629B] to-[#001220] text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-6 py-7">
+
+          <div className="flex items-center gap-4">
+
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
+              <span className="text-xl font-bold">
+                IEEE
+              </span>
+            </div>
+
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold">
+                Admin Panel
+              </h1>
+
+              <p className="text-sm text-white/70 mt-1">
+                Manage your IEEE Student Branch website
+              </p>
+            </div>
+
+          </div>
+
         </div>
       </header>
 
+
+      {/* ================= MAIN ================= */}
+
       <main className="max-w-7xl mx-auto px-6 py-8">
 
-        {/* Tabs */}
-        <div className="bg-white rounded-xl border p-2 flex gap-2 mb-8">
+        {/* ================= TABS ================= */}
 
-          <Tab
-            active={section === "members"}
-            onClick={() => {
-              setSection("members");
-              setShowForm(false);
-            }}
-            icon={<Users size={18} />}
-            label="Members"
-          />
+        <div className="bg-white border border-[#DCE8EF] rounded-2xl p-2 shadow-sm mb-8">
 
-          <Tab
-            active={section === "events"}
-            onClick={() => {
-              setSection("events");
-              setShowForm(false);
-            }}
-            icon={<CalendarDays size={18} />}
-            label="Events"
-          />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
 
-          <Tab
-            active={section === "gallery"}
-            onClick={() => {
-              setSection("gallery");
-              setShowForm(false);
-            }}
-            icon={<ImageIcon size={18} />}
-            label="Gallery"
-          />
+            <Tab
+              active={section === "members"}
+              icon={Users}
+              label="Members"
+              onClick={() => changeSection("members")}
+            />
 
-          <Tab
-            active={section === "news"}
-            onClick={() => {
-              setSection("news");
-              setShowForm(false);
-            }}
-            icon={<Newspaper size={18} />}
-            label="News"
-          />
+            <Tab
+              active={section === "events"}
+              icon={CalendarDays}
+              label="Events"
+              onClick={() => changeSection("events")}
+            />
+
+            <Tab
+              active={section === "gallery"}
+              icon={ImageIcon}
+              label="Gallery"
+              onClick={() => changeSection("gallery")}
+            />
+
+            <Tab
+              active={section === "news"}
+              icon={Newspaper}
+              label="News"
+              onClick={() => changeSection("news")}
+            />
+
+          </div>
 
         </div>
 
-        {/* Page heading */}
-        <div className="flex items-center justify-between mb-6">
 
-          <div className="flex items-center gap-3">
-            <div className="p-3 bg-blue-100 text-blue-600 rounded-lg">
+        {/* ================= SECTION HEADER ================= */}
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+          <div className="flex items-center gap-4">
+
+            <div className="w-12 h-12 rounded-xl bg-[#E5F2F8] text-[#00629B] flex items-center justify-center">
               <Icon size={24} />
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold">
+
+              <h2 className="text-2xl font-bold text-[#001220]">
                 {current.title}
               </h2>
 
-              <p className="text-gray-500 text-sm">
-                Manage your {section}
+              <p className="text-[#607D8B] text-sm">
+                {current.description}
               </p>
+
             </div>
+
           </div>
 
+
           <button
-            onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg transition"
+            onClick={() => setShowForm(!showForm)}
+            className="flex items-center justify-center gap-2 bg-[#00629B] hover:bg-[#004F7A] text-white px-5 py-3 rounded-xl font-medium transition"
           >
-            <Plus size={18} />
-            {current.button}
+            {showForm ? (
+              <>
+                <X size={18} />
+                Close
+              </>
+            ) : (
+              <>
+                <Plus size={18} />
+                {current.button}
+              </>
+            )}
           </button>
 
         </div>
 
-        {/* Create / Update Form */}
+
+        {/* ================= FORM ================= */}
+
         {showForm && (
-          <div className="bg-white border rounded-xl p-6 mb-8">
+          <div className="bg-white border border-[#DCE8EF] rounded-2xl shadow-sm p-6 mb-8">
 
-            <div className="flex justify-between items-center mb-6">
+            {section === "members" && (
+              <MemberForm
+                onClose={() => setShowForm(false)}
+              />
+            )}
 
-              <h3 className="text-lg font-semibold">
-                {current.button}
-              </h3>
+            {section === "events" && (
+              <EventForm
+                onClose={() => setShowForm(false)}
+              />
+            )}
 
-              <button
-                onClick={() => setShowForm(false)}
-                className="text-gray-500 hover:text-gray-900"
-              >
-                <X size={20} />
-              </button>
+            {section === "gallery" && (
+              <GalleryForm
+                onClose={() => setShowForm(false)}
+              />
+            )}
 
-            </div>
-
-            {section === "members" && <MemberForm />}
-            {section === "events" && <EventForm />}
-            {section === "gallery" && <GalleryForm />}
-            {section === "news" && <NewsForm />}
+            {section === "news" && (
+              <NewsForm
+                onClose={() => setShowForm(false)}
+              />
+            )}
 
           </div>
         )}
 
-        {/* Content */}
-        <div className="bg-white border rounded-xl overflow-hidden">
 
-          {section === "members" && (
-            <MemberTable
-              members={members}
-              onDelete={handleDelete}
-            />
-          )}
+        {/* ================= CONTENT ================= */}
 
-          {section === "events" && (
-            <EventTable
-              events={events}
-              onDelete={handleDelete}
-            />
-          )}
+        {section === "members" && (
+          <MemberTable
+            members={members}
+            onDelete={handleDelete}
+          />
+        )}
 
-          {section === "gallery" && (
-            <GalleryGrid
-              gallery={gallery}
-              onDelete={handleDelete}
-            />
-          )}
+        {section === "events" && (
+          <EventTable
+            events={events}
+            onDelete={handleDelete}
+          />
+        )}
 
-          {section === "news" && (
-            <NewsTable
-              news={news}
-              onDelete={handleDelete}
-            />
-          )}
+        {section === "gallery" && (
+          <GalleryGrid
+            gallery={gallery}
+            onDelete={handleDelete}
+          />
+        )}
 
-        </div>
+        {section === "news" && (
+          <NewsTable
+            news={news}
+            onDelete={handleDelete}
+          />
+        )}
 
       </main>
+
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* TAB */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   TAB
+========================================================= */
 
 function Tab({
   active,
-  onClick,
-  icon,
+  icon: Icon,
   label,
+  onClick,
 }: {
   active: boolean;
-  onClick: () => void;
-  icon: React.ReactNode;
+  icon: any;
   label: string;
+  onClick: () => void;
 }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-5 py-3 rounded-lg font-medium transition ${
+      className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
         active
-          ? "bg-blue-600 text-white"
-          : "text-gray-600 hover:bg-gray-100"
+          ? "bg-[#00629B] text-white shadow-sm"
+          : "text-[#607D8B] hover:bg-[#E5F2F8] hover:text-[#00629B]"
       }`}
     >
-      {icon}
+      <Icon size={18} />
       {label}
     </button>
   );
 }
 
-/* -------------------------------------------------- */
-/* MEMBERS */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   MEMBERS
+========================================================= */
 
 function MemberTable({
   members,
@@ -334,41 +391,88 @@ function MemberTable({
   members: Member[];
   onDelete: (id: number) => void;
 }) {
+  if (members.length === 0) {
+    return <EmptyState text="No members found." />;
+  }
+
   return (
-    <div className="divide-y">
+    <div className="bg-white border border-[#DCE8EF] rounded-2xl shadow-sm overflow-hidden">
 
-      {members.map((member) => (
-        <div
-          key={member.id}
-          className="flex items-center justify-between p-5"
-        >
-          <div>
-            <h3 className="font-semibold">
-              {member.name}
-            </h3>
+      <div className="overflow-x-auto">
 
-            <p className="text-sm text-blue-600">
-              {member.role}
-            </p>
+        <table className="w-full">
 
-            <p className="text-sm text-gray-500">
-              {member.email}
-            </p>
-          </div>
+          <thead className="bg-[#F3F7FA] border-b border-[#DCE8EF]">
 
-          <Actions
-            onDelete={() => onDelete(member.id)}
-          />
-        </div>
-      ))}
+            <tr>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Name
+              </th>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Role
+              </th>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Email
+              </th>
+
+              <th className="text-right px-6 py-4 text-sm font-semibold text-[#001220]">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {members.map((member) => (
+              <tr
+                key={member.id}
+                className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
+              >
+
+                <td className="px-6 py-4 font-medium text-[#001220]">
+                  {member.name}
+                </td>
+
+                <td className="px-6 py-4">
+
+                  <span className="inline-flex px-3 py-1 rounded-full bg-[#E5F2F8] text-[#00629B] text-sm font-medium">
+                    {member.role}
+                  </span>
+
+                </td>
+
+                <td className="px-6 py-4 text-[#607D8B]">
+                  {member.email}
+                </td>
+
+                <td className="px-6 py-4">
+                  <Actions
+                    onDelete={() => onDelete(member.id)}
+                  />
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* EVENTS */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   EVENTS
+========================================================= */
 
 function EventTable({
   events,
@@ -377,37 +481,84 @@ function EventTable({
   events: Event[];
   onDelete: (id: number) => void;
 }) {
+  if (events.length === 0) {
+    return <EmptyState text="No events found." />;
+  }
+
   return (
-    <div className="divide-y">
+    <div className="bg-white border border-[#DCE8EF] rounded-2xl shadow-sm overflow-hidden">
 
-      {events.map((event) => (
-        <div
-          key={event.id}
-          className="flex items-center justify-between p-5"
-        >
-          <div>
-            <h3 className="font-semibold">
-              {event.title}
-            </h3>
+      <div className="overflow-x-auto">
 
-            <p className="text-sm text-gray-500">
-              {event.date} • {event.location}
-            </p>
-          </div>
+        <table className="w-full">
 
-          <Actions
-            onDelete={() => onDelete(event.id)}
-          />
-        </div>
-      ))}
+          <thead className="bg-[#F3F7FA] border-b border-[#DCE8EF]">
+
+            <tr>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Event
+              </th>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Date
+              </th>
+
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Location
+              </th>
+
+              <th className="text-right px-6 py-4 text-sm font-semibold text-[#001220]">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {events.map((event) => (
+              <tr
+                key={event.id}
+                className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
+              >
+
+                <td className="px-6 py-4 font-medium text-[#001220]">
+                  {event.title}
+                </td>
+
+                <td className="px-6 py-4 text-[#607D8B]">
+                  {event.date}
+                </td>
+
+                <td className="px-6 py-4 text-[#607D8B]">
+                  {event.location}
+                </td>
+
+                <td className="px-6 py-4">
+                  <Actions
+                    onDelete={() => onDelete(event.id)}
+                  />
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* GALLERY */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   GALLERY
+========================================================= */
 
 function GalleryGrid({
   gallery,
@@ -416,34 +567,53 @@ function GalleryGrid({
   gallery: GalleryImage[];
   onDelete: (id: number) => void;
 }) {
+  if (gallery.length === 0) {
+    return <EmptyState text="No gallery images found." />;
+  }
+
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
       {gallery.map((image) => (
         <div
           key={image.id}
-          className="border rounded-xl overflow-hidden"
+          className="bg-white border border-[#DCE8EF] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition"
         >
 
-          <img
-            src={image.src}
-            alt={image.title}
-            className="w-full h-48 object-cover"
-          />
+          <div className="aspect-video overflow-hidden bg-[#F3F7FA]">
 
-          <div className="p-4">
-
-            <h3 className="font-semibold">
-              {image.title}
-            </h3>
-
-            <p className="text-sm text-gray-500 mb-4">
-              {image.category}
-            </p>
-
-            <Actions
-              onDelete={() => onDelete(image.id)}
+            <img
+              src={image.src}
+              alt={image.title}
+              className="w-full h-full object-cover hover:scale-105 transition duration-300"
             />
+
+          </div>
+
+          <div className="p-5">
+
+            <div className="flex items-start justify-between gap-4">
+
+              <div>
+
+                <h3 className="font-semibold text-[#001220]">
+                  {image.title}
+                </h3>
+
+                <p className="text-sm text-[#607D8B] mt-1">
+                  {image.category}
+                </p>
+
+              </div>
+
+              <button
+                onClick={() => onDelete(image.id)}
+                className="p-2 rounded-lg text-red-500 hover:bg-red-50 transition"
+              >
+                <Trash2 size={17} />
+              </button>
+
+            </div>
 
           </div>
 
@@ -454,9 +624,10 @@ function GalleryGrid({
   );
 }
 
-/* -------------------------------------------------- */
-/* NEWS */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   NEWS
+========================================================= */
 
 function NewsTable({
   news,
@@ -465,44 +636,84 @@ function NewsTable({
   news: News[];
   onDelete: (id: number) => void;
 }) {
+  if (news.length === 0) {
+    return <EmptyState text="No news found." />;
+  }
+
   return (
-    <div className="divide-y">
+    <div className="bg-white border border-[#DCE8EF] rounded-2xl shadow-sm overflow-hidden">
 
-      {news.map((item) => (
-        <div
-          key={item.id}
-          className="flex items-center justify-between p-5"
-        >
-          <div className="max-w-3xl">
+      <div className="overflow-x-auto">
 
-            <h3 className="font-semibold">
-              {item.title}
-            </h3>
+        <table className="w-full">
 
-            <p className="text-sm text-gray-500">
-              {item.date}
-            </p>
+          <thead className="bg-[#F3F7FA] border-b border-[#DCE8EF]">
 
-            <p className="text-sm text-gray-600 mt-1">
-              {item.description}
-            </p>
+            <tr>
 
-          </div>
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Title
+              </th>
 
-          <Actions
-            onDelete={() => onDelete(item.id)}
-          />
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Date
+              </th>
 
-        </div>
-      ))}
+              <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
+                Description
+              </th>
+
+              <th className="text-right px-6 py-4 text-sm font-semibold text-[#001220]">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {news.map((item) => (
+              <tr
+                key={item.id}
+                className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
+              >
+
+                <td className="px-6 py-4 font-medium text-[#001220]">
+                  {item.title}
+                </td>
+
+                <td className="px-6 py-4 text-[#607D8B]">
+                  {item.date}
+                </td>
+
+                <td className="px-6 py-4 text-[#607D8B] max-w-md">
+                  {item.description}
+                </td>
+
+                <td className="px-6 py-4">
+                  <Actions
+                    onDelete={() => onDelete(item.id)}
+                  />
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* ACTIONS */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   ACTIONS
+========================================================= */
 
 function Actions({
   onDelete,
@@ -510,167 +721,294 @@ function Actions({
   onDelete: () => void;
 }) {
   return (
-    <div className="flex gap-2">
+    <div className="flex items-center justify-end gap-2">
 
       <button
-        className="p-2 rounded-lg text-blue-600 hover:bg-blue-50"
+        className="p-2 rounded-lg text-[#00629B] hover:bg-[#E5F2F8] transition"
         title="Edit"
       >
-        <Pencil size={18} />
+        <Pencil size={17} />
       </button>
 
       <button
         onClick={onDelete}
-        className="p-2 rounded-lg text-red-600 hover:bg-red-50"
+        className="p-2 rounded-lg text-red-500 hover:bg-red-50 transition"
         title="Delete"
       >
-        <Trash2 size={18} />
+        <Trash2 size={17} />
       </button>
 
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* FORMS */
-/* -------------------------------------------------- */
 
-function MemberForm() {
+/* =========================================================
+   MEMBER FORM
+========================================================= */
+
+function MemberForm({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   return (
-    <form className="grid md:grid-cols-2 gap-5">
-
-      <Input label="Name" placeholder="Member name" />
-
-      <Input label="Role" placeholder="Chairman" />
-
-      <Input label="Email" placeholder="member@example.com" />
+    <form className="space-y-5">
 
       <div>
-        <label className="block text-sm font-medium mb-2">
-          Member Image
-        </label>
 
-        <input
-          type="file"
-          accept="image/*"
-          className="w-full border rounded-lg p-3"
-        />
+        <h3 className="text-lg font-semibold text-[#001220]">
+          Add Member
+        </h3>
+
+        <p className="text-sm text-[#607D8B] mt-1">
+          Add a new IEEE student branch member.
+        </p>
+
       </div>
 
-      <div className="md:col-span-2">
-        <SubmitButton text="Save Member" />
+      <div className="grid md:grid-cols-2 gap-5">
+
+        <Input
+          label="Name"
+          placeholder="Enter member name"
+        />
+
+        <Input
+          label="Role"
+          placeholder="Enter role"
+        />
+
+      </div>
+
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Enter email address"
+      />
+
+      <FileInput
+        label="Member Image"
+      />
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-5 py-2.5 rounded-xl border border-[#CFDEE6] text-[#607D8B] hover:bg-[#F3F7FA] transition"
+        >
+          Cancel
+        </button>
+
+        <SubmitButton text="Create Member" />
+
       </div>
 
     </form>
   );
 }
 
-function EventForm() {
+
+/* =========================================================
+   EVENT FORM
+========================================================= */
+
+function EventForm({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   return (
-    <form className="grid md:grid-cols-2 gap-5">
+    <form className="space-y-5">
 
-      <Input label="Event Title" placeholder="IEEE Hackathon" />
+      <div>
 
-      <Input label="Location" placeholder="Everest Engineering College" />
+        <h3 className="text-lg font-semibold text-[#001220]">
+          Add Event
+        </h3>
 
-      <Input label="Date" type="date" />
+        <p className="text-sm text-[#607D8B] mt-1">
+          Create a new IEEE event.
+        </p>
 
-      <Input label="Time" type="time" />
+      </div>
 
-      <div className="md:col-span-2">
-        <label className="block text-sm font-medium mb-2">
+      <Input
+        label="Event Title"
+        placeholder="Enter event title"
+      />
+
+      <div className="grid md:grid-cols-2 gap-5">
+
+        <Input
+          label="Date"
+          type="date"
+        />
+
+        <Input
+          label="Location"
+          placeholder="Enter event location"
+        />
+
+      </div>
+
+      <FileInput
+        label="Event Image"
+      />
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-5 py-2.5 rounded-xl border border-[#CFDEE6] text-[#607D8B] hover:bg-[#F3F7FA] transition"
+        >
+          Cancel
+        </button>
+
+        <SubmitButton text="Create Event" />
+
+      </div>
+
+    </form>
+  );
+}
+
+
+/* =========================================================
+   GALLERY FORM
+========================================================= */
+
+function GalleryForm({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
+  return (
+    <form className="space-y-5">
+
+      <div>
+
+        <h3 className="text-lg font-semibold text-[#001220]">
+          Upload Gallery Image
+        </h3>
+
+        <p className="text-sm text-[#607D8B] mt-1">
+          Add a new image to the IEEE gallery.
+        </p>
+
+      </div>
+
+      <Input
+        label="Title"
+        placeholder="Enter image title"
+      />
+
+      <Input
+        label="Category"
+        placeholder="Example: Coding Competitions"
+      />
+
+      <FileInput
+        label="Image"
+        accept="image/*"
+      />
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-5 py-2.5 rounded-xl border border-[#CFDEE6] text-[#607D8B] hover:bg-[#F3F7FA] transition"
+        >
+          Cancel
+        </button>
+
+        <SubmitButton text="Upload Image" />
+
+      </div>
+
+    </form>
+  );
+}
+
+
+/* =========================================================
+   NEWS FORM
+========================================================= */
+
+function NewsForm({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
+  return (
+    <form className="space-y-5">
+
+      <div>
+
+        <h3 className="text-lg font-semibold text-[#001220]">
+          Add News
+        </h3>
+
+        <p className="text-sm text-[#607D8B] mt-1">
+          Publish a new IEEE news article.
+        </p>
+
+      </div>
+
+      <Input
+        label="Title"
+        placeholder="Enter news title"
+      />
+
+      <Input
+        label="Date"
+        type="date"
+      />
+
+      <div>
+
+        <label className="block text-sm font-medium text-[#001220] mb-2">
           Description
         </label>
 
         <textarea
           rows={5}
-          className="w-full border rounded-lg p-3"
-          placeholder="Event description..."
+          placeholder="Write news description..."
+          className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10 resize-none"
         />
+
       </div>
 
-      <div className="md:col-span-2">
-        <SubmitButton text="Save Event" />
+      <FileInput
+        label="News Image"
+        accept="image/*"
+      />
+
+      <div className="flex justify-end gap-3">
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="px-5 py-2.5 rounded-xl border border-[#CFDEE6] text-[#607D8B] hover:bg-[#F3F7FA] transition"
+        >
+          Cancel
+        </button>
+
+        <SubmitButton text="Create News" />
+
       </div>
 
     </form>
   );
 }
 
-function GalleryForm() {
-  return (
-    <form className="space-y-5">
 
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Image
-        </label>
-
-        <input
-          type="file"
-          accept="image/*"
-          className="w-full border rounded-lg p-3"
-        />
-      </div>
-
-      <Input
-        label="Title"
-        placeholder="Hackathon Night"
-      />
-
-      <Input
-        label="Category"
-        placeholder="Coding Competitions"
-      />
-
-      <SubmitButton text="Upload Image" />
-
-    </form>
-  );
-}
-
-function NewsForm() {
-  return (
-    <form className="space-y-5">
-
-      <Input
-        label="News Title"
-        placeholder="IEEE Student Branch..."
-      />
-
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Description
-        </label>
-
-        <textarea
-          rows={7}
-          className="w-full border rounded-lg p-3"
-          placeholder="Write your news..."
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          News Image
-        </label>
-
-        <input
-          type="file"
-          accept="image/*"
-          className="w-full border rounded-lg p-3"
-        />
-      </div>
-
-      <SubmitButton text="Publish News" />
-
-    </form>
-  );
-}
-
-/* -------------------------------------------------- */
-/* REUSABLE INPUT */
-/* -------------------------------------------------- */
+/* =========================================================
+   INPUT
+========================================================= */
 
 function Input({
   label,
@@ -683,22 +1021,54 @@ function Input({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">
+
+      <label className="block text-sm font-medium text-[#001220] mb-2">
         {label}
       </label>
 
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10"
       />
+
     </div>
   );
 }
 
-/* -------------------------------------------------- */
-/* SUBMIT BUTTON */
-/* -------------------------------------------------- */
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+function FileInput({
+  label,
+  accept = "image/*",
+}: {
+  label: string;
+  accept?: string;
+}) {
+  return (
+    <div>
+
+      <label className="block text-sm font-medium text-[#001220] mb-2">
+        {label}
+      </label>
+
+      <input
+        type="file"
+        accept={accept}
+        className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] bg-white text-sm text-[#607D8B] file:mr-4 file:rounded-lg file:border-0 file:bg-[#E5F2F8] file:px-4 file:py-2 file:text-[#00629B] file:font-medium"
+      />
+
+    </div>
+  );
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
 
 function SubmitButton({
   text,
@@ -708,9 +1078,34 @@ function SubmitButton({
   return (
     <button
       type="submit"
-      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+      className="px-5 py-2.5 rounded-xl bg-[#00629B] hover:bg-[#004F7A] text-white font-medium transition"
     >
       {text}
     </button>
+  );
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+function EmptyState({
+  text,
+}: {
+  text: string;
+}) {
+  return (
+    <div className="bg-white border border-[#DCE8EF] rounded-2xl p-12 text-center">
+
+      <div className="w-14 h-14 mx-auto rounded-full bg-[#E5F2F8] text-[#00629B] flex items-center justify-center mb-4">
+        <Users size={24} />
+      </div>
+
+      <p className="text-[#607D8B]">
+        {text}
+      </p>
+
+    </div>
   );
 }

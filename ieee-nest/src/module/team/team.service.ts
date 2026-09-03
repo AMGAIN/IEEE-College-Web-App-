@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { addMemberDto } from './dto/add-member.dto';
+import { createMemberDto } from './dto/create-member.dto';
 import { Member, MemberDocument } from './schemas/team.schema';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class TeamService {
         return this.memberModel.find().exec();
     }
 
-    async addMember( memberData: addMemberDto){
+    async addMember(memberData: createMemberDto) {
         const newMember = new this.memberModel(memberData);
         return newMember.save();
     }
