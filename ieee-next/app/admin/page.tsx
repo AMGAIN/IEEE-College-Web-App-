@@ -1,42 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Users,
-  CalendarDays,
-  Image as ImageIcon,
-  Newspaper,
-  Plus,
-  Pencil,
-  Trash2,
-  X,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Users, CalendarDays, Image as ImageIcon, Newspaper, Plus, Pencil, Trash2, X} from "lucide-react";
+import { getTeam } from "@/services/team.service";
+import { getEvent } from "@/services/event.service";
+import { getGallery } from "@/services/gallery.service";
+import { getNews } from "@/services/news.service";
 
 type Section = "members" | "events" | "gallery" | "news";
 
 type Member = {
-  id: number;
+  _id: number;
   name: string;
   role: string;
   email: string;
 };
 
 type Event = {
-  id: number;
+  _id: number;
   title: string;
   date: string;
   location: string;
 };
 
 type GalleryImage = {
-  id: number;
+  _id: number;
   title: string;
   category: string;
   src: string;
 };
 
 type News = {
-  id: number;
+  _id: number;
   title: string;
   date: string;
   description: string;
@@ -46,15 +41,15 @@ export default function AdminPage() {
   const [section, setSection] = useState<Section>("members");
   const [showForm, setShowForm] = useState(false);
 
-  const [members, setMembers] = useState<Member[]>([
+  const [team, setTeam] = useState<Member[]>([
     {
-      id: 1,
-      name: "John Doe",
-      role: "Chairman",
-      email: "john@example.com",
+      _id: 1,
+      name: "Neha Pal",
+      role: "Chair",
+      email: "nehapal@example.com",
     },
     {
-      id: 2,
+      _id: 2,
       name: "Jane Doe",
       role: "Secretary",
       email: "jane@example.com",
@@ -63,7 +58,7 @@ export default function AdminPage() {
 
   const [events, setEvents] = useState<Event[]>([
     {
-      id: 1,
+      _id: 1,
       title: "IEEE Hackathon 2026",
       date: "2026-09-20",
       location: "Everest Engineering College",
@@ -72,7 +67,7 @@ export default function AdminPage() {
 
   const [gallery, setGallery] = useState<GalleryImage[]>([
     {
-      id: 1,
+      _id: 1,
       title: "Hackathon Night",
       category: "Coding Competitions",
       src: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=600",
@@ -81,13 +76,37 @@ export default function AdminPage() {
 
   const [news, setNews] = useState<News[]>([
     {
-      id: 1,
+      _id: 1,
       title: "IEEE Student Branch Wins Hackathon",
       date: "2026-08-30",
       description:
         "Our team successfully participated in the hackathon.",
     },
   ]);
+
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const event_data = await getEvent();
+        const news_data = await getNews();
+        const team_data = await getTeam();
+        const Gallery_data = await getGallery();
+
+
+        console.log("Admin got events:", event_data);
+
+        setEvents(event_data);
+        setNews(news_data);
+        setTeam(team_data);
+        setGallery(Gallery_data);
+
+      } catch (error) {
+        console.error("Failed to load events:", error);
+      }
+    }
+
+    loadEvents();
+  }, []);
 
   const sectionInfo = {
     members: {
@@ -127,7 +146,7 @@ export default function AdminPage() {
     setShowForm(false);
   }
 
-  function handleDelete(id: number) {
+  function handleDelete(_id: number) {
     const confirmed = confirm(
       "Are you sure you want to delete this item?"
     );
@@ -135,26 +154,26 @@ export default function AdminPage() {
     if (!confirmed) return;
 
     if (section === "members") {
-      setMembers((prev) =>
-        prev.filter((item) => item.id !== id)
+      setTeam((prev) =>
+        prev.filter((item) => item._id !== _id)
       );
     }
 
     if (section === "events") {
       setEvents((prev) =>
-        prev.filter((item) => item.id !== id)
+        prev.filter((item) => item._id !== _id)
       );
     }
 
     if (section === "gallery") {
       setGallery((prev) =>
-        prev.filter((item) => item.id !== id)
+        prev.filter((item) => item._id !== _id)
       );
     }
 
     if (section === "news") {
       setNews((prev) =>
-        prev.filter((item) => item.id !== id)
+        prev.filter((item) => item._id !== _id)
       );
     }
   }
@@ -316,7 +335,7 @@ export default function AdminPage() {
 
         {section === "members" && (
           <MemberTable
-            members={members}
+            members={team}
             onDelete={handleDelete}
           />
         )}
@@ -389,7 +408,7 @@ function MemberTable({
   onDelete,
 }: {
   members: Member[];
-  onDelete: (id: number) => void;
+  onDelete: (_id: number) => void;
 }) {
   if (members.length === 0) {
     return <EmptyState text="No members found." />;
@@ -430,7 +449,7 @@ function MemberTable({
 
             {members.map((member) => (
               <tr
-                key={member.id}
+                key={member._id}
                 className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
               >
 
@@ -452,7 +471,7 @@ function MemberTable({
 
                 <td className="px-6 py-4">
                   <Actions
-                    onDelete={() => onDelete(member.id)}
+                    onDelete={() => onDelete(member._id)}
                   />
                 </td>
 
@@ -479,7 +498,7 @@ function EventTable({
   onDelete,
 }: {
   events: Event[];
-  onDelete: (id: number) => void;
+  onDelete: (_id: number) => void;
 }) {
   if (events.length === 0) {
     return <EmptyState text="No events found." />;
@@ -520,7 +539,7 @@ function EventTable({
 
             {events.map((event) => (
               <tr
-                key={event.id}
+                key={event._id}
                 className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
               >
 
@@ -538,7 +557,7 @@ function EventTable({
 
                 <td className="px-6 py-4">
                   <Actions
-                    onDelete={() => onDelete(event.id)}
+                    onDelete={() => onDelete(event._id)}
                   />
                 </td>
 
@@ -565,7 +584,7 @@ function GalleryGrid({
   onDelete,
 }: {
   gallery: GalleryImage[];
-  onDelete: (id: number) => void;
+  onDelete: (_id: number) => void;
 }) {
   if (gallery.length === 0) {
     return <EmptyState text="No gallery images found." />;
@@ -576,7 +595,7 @@ function GalleryGrid({
 
       {gallery.map((image) => (
         <div
-          key={image.id}
+          key={image._id}
           className="bg-white border border-[#DCE8EF] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition"
         >
 
@@ -607,7 +626,7 @@ function GalleryGrid({
               </div>
 
               <button
-                onClick={() => onDelete(image.id)}
+                onClick={() => onDelete(image._id)}
                 className="p-2 rounded-lg text-red-500 hover:bg-red-50 transition"
               >
                 <Trash2 size={17} />
@@ -634,7 +653,7 @@ function NewsTable({
   onDelete,
 }: {
   news: News[];
-  onDelete: (id: number) => void;
+  onDelete: (_id: number) => void;
 }) {
   if (news.length === 0) {
     return <EmptyState text="No news found." />;
@@ -675,7 +694,7 @@ function NewsTable({
 
             {news.map((item) => (
               <tr
-                key={item.id}
+                key={item._id}
                 className="border-b border-[#EDF3F6] last:border-0 hover:bg-[#F8FBFD] transition"
               >
 
@@ -693,7 +712,7 @@ function NewsTable({
 
                 <td className="px-6 py-4">
                   <Actions
-                    onDelete={() => onDelete(item.id)}
+                    onDelete={() => onDelete(item._id)}
                   />
                 </td>
 
