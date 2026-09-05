@@ -25,4 +25,9 @@ export class EventService {
         const changedEvent = this.eventModel.findByIdAndUpdate( id, eventData, { new: true },).exec();
         return changedEvent;
     }
+
+    async deleteEvent(id: string){
+        const deletedEvent = this.eventModel.findByIdAndDelete(id);
+        return deletedEvent;
+    }
 }
