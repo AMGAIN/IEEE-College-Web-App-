@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Users, CalendarDays, Image as ImageIcon, Newspaper, Plus, Pencil, Trash2, X} from "lucide-react";
+import { Users, CalendarDays, Image as ImageIcon, Newspaper, Plus, Pencil, Trash2, X } from "lucide-react";
 import { getTeam } from "@/services/team.service";
 import { getEvent } from "@/services/event.service";
 import { getGallery } from "@/services/gallery.service";
@@ -386,11 +386,10 @@ function Tab({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
-        active
+      className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium transition ${active
           ? "bg-[#00629B] text-white shadow-sm"
           : "text-[#607D8B] hover:bg-[#E5F2F8] hover:text-[#00629B]"
-      }`}
+        }`}
     >
       <Icon size={18} />
       {label}
@@ -861,13 +860,40 @@ function EventForm({
       <div className="grid md:grid-cols-2 gap-5">
 
         <Input
+          label="Category"
+          placeholder="Enter event category"
+        />
+
+        <Input
+          label="Status"
+          placeholder="Enter event Status"
+        />
+
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-5">
+
+        <Input
           label="Date"
           type="date"
         />
 
         <Input
-          label="Location"
-          placeholder="Enter event location"
+          label="Time"
+          placeholder="Enter event Time"
+        />
+
+      </div>
+      <div className="grid md:grid-cols-2 gap-5">
+
+        <Input
+          label="Venue"
+          placeholder="Enter event venue"
+        />
+
+        <Input
+          label="Description"
+          placeholder="Enter event Description"
         />
 
       </div>
@@ -982,20 +1008,33 @@ function NewsForm({
         placeholder="Enter news title"
       />
 
-      <Input
-        label="Date"
-        type="date"
-      />
+      <div className="grid md:grid-cols-2 gap-5">
 
+        <Input
+          label="Category"
+          placeholder="Enter event category"
+        />
+
+        <Input
+          label="Date"
+          type="Date"
+        />
+
+      </div>
+
+        <Input
+          label="Excerpt"
+          placeholder="Enter event Excerpt"
+        />
       <div>
 
         <label className="block text-sm font-medium text-[#001220] mb-2">
-          Description
+          Content
         </label>
 
         <textarea
           rows={5}
-          placeholder="Write news description..."
+          placeholder="Write news Content..."
           className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10 resize-none"
         />
 
