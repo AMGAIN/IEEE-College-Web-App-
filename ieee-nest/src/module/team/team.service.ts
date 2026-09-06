@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { createMemberDto } from './dto/create-member.dto';
 import { Member, MemberDocument } from './schemas/team.schema';
+import { updateMemberDto } from './dto/update-member.dto';
 
 @Injectable()
 export class TeamService {
@@ -18,5 +19,15 @@ export class TeamService {
     async addMember(memberData: createMemberDto) {
         const newMember = new this.memberModel(memberData);
         return newMember.save();
+    }
+
+    async updateMember(id: string, memberData: updateMemberDto){
+        const changedMember = this.memberModel.findByIdAndUpdate(id, memberData);
+        return changedMember;
+    }
+
+    async deleteMember(id: string){
+        const deletedMember = this.memberModel.findByIdAndDelete(id);
+        return deletedMember;
     }
 }

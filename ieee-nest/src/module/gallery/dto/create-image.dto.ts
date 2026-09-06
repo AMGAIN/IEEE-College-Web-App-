@@ -2,11 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class createImageDto {
     @ApiProperty()
-    src!: String
+    src!: string
 
     @ApiProperty()
-    alt!: String
+    alt!: string
 
     @ApiProperty()
-    category!: String
+    category!: string
 }
