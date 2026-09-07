@@ -16,17 +16,23 @@ export class TeamService {
         return this.memberModel.find().exec();
     }
 
-    async addMember(memberData: createMemberDto) {
-        const newMember = new this.memberModel(memberData);
+    async addMember(
+        memberData: createMemberDto,
+        file: Express.Multer.File
+    ) {
+        const newMember = new this.memberModel({
+            ...memberData,
+            image: file?.path
+        });
         return newMember.save();
     }
 
-    async updateMember(id: string, memberData: updateMemberDto){
+    async updateMember(id: string, memberData: updateMemberDto) {
         const changedMember = this.memberModel.findByIdAndUpdate(id, memberData);
         return changedMember;
     }
 
-    async deleteMember(id: string){
+    async deleteMember(id: string) {
         const deletedMember = this.memberModel.findByIdAndDelete(id);
         return deletedMember;
     }
