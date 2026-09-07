@@ -8,7 +8,7 @@ export class updateNewsDto {
     category?: string;
 
     @ApiProperty({ required: false })
-    date?: Date;
+    date?: string;
 
     @ApiProperty({ required: false })
     excerpt?: string;
@@ -16,6 +16,4 @@ export class updateNewsDto {
     @ApiProperty({ required: false })
     content?: string;
 
-    @ApiProperty({ required: false })
-    image?: string;
 }

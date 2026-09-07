@@ -6,7 +6,7 @@ import PageHero from "@/components/PageHero";
 import { getNews } from "@/services/news.service";
 
 type NewsArticle = {
-  _id: number;
+  _id: string;
   image: string;
   title: string;
   category: string;
@@ -24,7 +24,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } }
 
 export default function News() {
   const [category, setCategory] = useState("All");
-  const [expanded, setExpanded] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
   const [news, setNews] = useState<NewsArticle[]>([]);
 
   useEffect(() => {

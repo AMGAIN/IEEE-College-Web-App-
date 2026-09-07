@@ -6,22 +6,22 @@ export type NewsDocument = HydratedDocument<News>;
 @Schema()
 export class News{
     @Prop({required: true})
-    title!: String;
+    title!: string;
 
     @Prop({required: true})
-    category!: String;
+    category!: string;
 
     @Prop({required: true})
-    date!: Date;
+    date!: string;
 
     @Prop()
-    excerpt!: String;
+    excerpt!: string;
 
     @Prop()
-    content!: String;
+    content!: string;
 
     @Prop()
-    image!: String;
+    image!: string;
 }
 
 export const NewsSchema = SchemaFactory.createForClass(News);

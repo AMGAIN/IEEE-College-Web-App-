@@ -2,20 +2,17 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class createNewsDto{
     @ApiProperty()
-    title!: String;
+    title!: string;
 
     @ApiProperty()
-    category!: String;
+    category!: string;
 
     @ApiProperty()
-    date!: Date;
+    date!: string;
 
     @ApiProperty()
-    excerpt!: String;
+    excerpt!: string;
 
     @ApiProperty()
-    content!: String;
-
-    @ApiProperty()
-    image!: String;
+    content!: string;
 }

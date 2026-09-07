@@ -3,49 +3,104 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { NewsService } from './news.service';
 import { createNewsDto } from './dto/create-news.dto';
 import { updateNewsDto } from './dto/update-news.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiBody, ApiConsumes } from '@nestjs/swagger';
 
 @Controller('news')
 export class NewsController {
   constructor(private readonly newsService: NewsService) { }
 
   @Get('')
-    @ApiOperation({ summary: 'Get all news articles' })
-    @ApiResponse({ status: 200, description: 'Returns all news articles' })
+  @ApiOperation({ summary: 'Get all news articles' })
   getNews() {
     return this.newsService.getNews();
   }
 
   @Post('')
-  createNews(@Body() newsData: createNewsDto) {
-    return this.newsService.createNews(newsData);
-  }
-
-  @Put(':id')
-  updateNews(
-    @Param('id') id: string,
-    @Body() newsData: updateNewsDto
-  ) {
-    return this.newsService.updateNews(id, newsData);
-  }
-
-  @Delete(':id')
-  deleteNews(@Param('id') id: string) {
-    return this.newsService.deleteNews(id);
-  }
-
-  @Post('upload')
+  @ApiOperation({ summary: 'Create new news articles' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+        },
+        category: {
+          type: 'string',
+        },
+        date: {
+          type: 'string',
+        },
+        excerpt: {
+          type: 'string',
+        },
+        content: {
+          type: 'string',
+        },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @UseInterceptors(
     FileInterceptor('image', {
       dest: './uploads/news',
     }),
   )
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
-
-    return {
-      filename: file.filename,
-      path: file.path,
-    };
+  createNews(@Body() newsData: createNewsDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.newsService.createNews(newsData, file);
   }
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Update the news articles' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+        },
+        category: {
+          type: 'string',
+        },
+        date: {
+          type: 'string',
+        },
+        excerpt: {
+          type: 'string',
+        },
+        content: {
+          type: 'string',
+        },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('image', {
+      dest: './uploads/news',
+    }),
+  )
+  updateNews(
+    @Param('id') id: string,
+    @Body() newsData: updateNewsDto,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    return this.newsService.updateNews(id, newsData, file);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete news article' })
+  deleteNews(@Param('id') id: string) {
+    return this.newsService.deleteNews(id);
+  }
+
 }
