@@ -1,21 +1,19 @@
 // services/news.service.ts
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+import { API_URL } from "@/lib/api";
 
 export async function getNews() {
   try {
-    const response = await fetch(`${API_BASE_URL}/news`);
+    const response = await fetch(`${API_URL}/news`);
     if (!response.ok) {
       throw new Error('Failed to fetch news');
     }
     const data = await response.json();
-    
-    // ✅ Ensure image URLs are complete
-    return data.map((item: any) => ({
-      ...item,
-      // If image doesn't start with http, add base URL
-      image: item.image && !item.image.startsWith('http') 
-        ? `${API_BASE_URL}${item.image}` 
-        : item.image
+
+    // ✅ Add base URL to image paths
+    return data.map((news: any) => ({
+      ...news,
+      _id: String(news._id),
+      image: `${API_URL}/${news.image}` // ← This fixes it!
     }));
   } catch (error) {
     console.error('Error fetching news:', error);

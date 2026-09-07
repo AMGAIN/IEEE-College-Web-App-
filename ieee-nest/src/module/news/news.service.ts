@@ -26,6 +26,7 @@ export class NewsService {
             ...newsData,
             image: file?.path
         });
+        
         return newNews.save();
     }
 

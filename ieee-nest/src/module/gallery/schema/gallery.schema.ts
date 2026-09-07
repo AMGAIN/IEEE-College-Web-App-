@@ -6,7 +6,7 @@ export type GalleryDocument = HydratedDocument<Gallery>;
 @Schema()
 export class Gallery{
     @Prop()
-    src!: String;
+    image!: String;
 
     @Prop()
     alt!: String;

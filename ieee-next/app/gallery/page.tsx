@@ -8,7 +8,7 @@ import { getGallery } from "@/services/gallery.service";
 
 type GalleryImage = {
   _id: string | number;
-  src: string;
+  image: string;
   alt: string;
   category: string;
 };
@@ -92,7 +92,7 @@ export default function Gallery() {
                 className="relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-video group cursor-pointer"
               >
                 <img
-                  src={img.src}
+                  src={img.image}
                   alt={img.alt}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -139,7 +139,7 @@ export default function Gallery() {
             className="max-w-4xl w-full rounded-2xl overflow-hidden bg-gray-900"
           >
             <img
-              src={lightbox.src.replace(
+              src={lightbox.image.replace(
                 "w=600&h=420",
                 "w=1200&h=800"
               )}

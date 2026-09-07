@@ -22,6 +22,4 @@ export class updateEventDto {
     @ApiProperty({required: false})
     description?: string;
 
-    @ApiProperty({required: false})
-    image?: string;
 }

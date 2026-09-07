@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete,UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { TeamService } from './team.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createMemberDto } from './dto/create-member.dto';
@@ -22,30 +22,19 @@ export class TeamController {
     schema: {
       type: 'object',
       properties: {
-        name: {
-          type: 'string',
-        },
-        position: {
-          type: 'string',
-        },
-        department: {
-          type: 'string',
-        },
-        email: {
-          type: 'string',
-        },
-        image: {
-          type: 'string',
-          format: 'binary',
-        },
+        name: { type: 'string' },
+        position: { type: 'string' },
+        department: { type: 'string' },
+        email: { type: 'string' },
+        image: { type: 'string', format: 'binary' },
       },
     },
   })
-    @UseInterceptors(
-      FileInterceptor('image', {
-        dest: './uploads/team',
-      }),
-    )
+  @UseInterceptors(
+    FileInterceptor('image', {
+      dest: './uploads/team',  // ← Simplified, just like news
+    }),
+  )
   addMember(
     @Body() memberData: createMemberDto,
     @UploadedFile() file: Express.Multer.File,

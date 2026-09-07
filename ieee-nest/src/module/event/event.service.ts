@@ -10,23 +10,29 @@ export class EventService {
     constructor(
         @InjectModel(Event.name)
         private eventModel: Model<EventDocument>
-    ){}
+    ) { }
 
     async getEvent() {
         return this.eventModel.find().exec();
     }
 
-    async createEvent(eventData: createEventDto) {
-        const newEvent = new this.eventModel(eventData);
+    async createEvent(
+        eventData: createEventDto,
+        file: Express.Multer.File
+    ) {
+        const newEvent = new this.eventModel({
+            ...eventData,
+            image: file?.path
+        });
         return newEvent.save();
     }
 
-    async updateEvent(id :string, eventData: updateEventDto) {
-        const changedEvent = this.eventModel.findByIdAndUpdate( id, eventData, { new: true },).exec();
+    async updateEvent(id: string, eventData: updateEventDto) {
+        const changedEvent = this.eventModel.findByIdAndUpdate(id, eventData, { new: true },).exec();
         return changedEvent;
     }
 
-    async deleteEvent(id: string){
+    async deleteEvent(id: string) {
         const deletedEvent = this.eventModel.findByIdAndDelete(id);
         return deletedEvent;
     }

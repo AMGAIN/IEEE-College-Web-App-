@@ -22,25 +22,12 @@ export class NewsController {
     schema: {
       type: 'object',
       properties: {
-        title: {
-          type: 'string',
-        },
-        category: {
-          type: 'string',
-        },
-        date: {
-          type: 'string',
-        },
-        excerpt: {
-          type: 'string',
-        },
-        content: {
-          type: 'string',
-        },
-        image: {
-          type: 'string',
-          format: 'binary',
-        },
+        title: {type: 'string'},
+        category: {type: 'string'},
+        date: {type: 'string'},
+        excerpt: {type: 'string'},
+        content: {type: 'string'},
+        image: {type: 'string',format: 'binary'},
       },
     },
   })
@@ -61,26 +48,12 @@ export class NewsController {
   @ApiBody({
     schema: {
       type: 'object',
-      properties: {
-        title: {
-          type: 'string',
-        },
-        category: {
-          type: 'string',
-        },
-        date: {
-          type: 'string',
-        },
-        excerpt: {
-          type: 'string',
-        },
-        content: {
-          type: 'string',
-        },
-        image: {
-          type: 'string',
-          format: 'binary',
-        },
+      properties: {title: {type: 'string',},
+        category: {type: 'string'},
+        date: {type: 'string'},
+        excerpt: {type: 'string'},
+        content: {type: 'string'},
+        image: {type: 'string',format: 'binary'},
       },
     },
   })

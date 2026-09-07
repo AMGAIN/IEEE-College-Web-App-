@@ -22,18 +22,18 @@ export class TeamService {
     ) {
         const newMember = new this.memberModel({
             ...memberData,
-            image: file?.path
+            image: file?.path  // ← Simplified, just like news
         });
         return newMember.save();
     }
 
     async updateMember(id: string, memberData: updateMemberDto) {
-        const changedMember = this.memberModel.findByIdAndUpdate(id, memberData);
+        const changedMember = this.memberModel.findByIdAndUpdate(id, memberData, { new: true }).exec();
         return changedMember;
     }
 
     async deleteMember(id: string) {
-        const deletedMember = this.memberModel.findByIdAndDelete(id);
+        const deletedMember = this.memberModel.findByIdAndDelete(id).exec();
         return deletedMember;
     }
 }

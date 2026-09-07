@@ -1,10 +1,24 @@
 import { API_URL } from "@/lib/api";
 
-export async function getTeam(){
-    const response = await fetch(`${API_URL}/team`)
+export async function getTeam() {
+    try {
+        const response = await fetch(`${API_URL}/team`);
+        if (!response.ok) {
+            throw new Error('Team detail not Found');
+        }
 
-    if(!response.ok){
-        throw new Error('Team detail not Found');
+        const data = await response.json();
+
+        // ✅ Add base URL to image paths
+        return data.map((member: any) => ({
+            ...member,
+            _id: String(member._id),
+            image: `${API_URL}/${member.image}` // ← This fixes it!
+        }));
+
+    } catch (error) {
+        console.error('Error fetching team:', error);
+        throw error;
     }
-    return response.json();
+
 }

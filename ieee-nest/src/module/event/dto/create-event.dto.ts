@@ -22,6 +22,4 @@ export class createEventDto {
   @ApiProperty()
   description!: string;
 
-  @ApiProperty()
-  image!: string;
 }

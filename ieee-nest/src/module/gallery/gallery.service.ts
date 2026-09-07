@@ -16,8 +16,14 @@ export class GalleryService {
         return this.galleryModel.find().exec();
     }
 
-    async createImage(galleryData: createImageDto) {
-        const newImage = new this.galleryModel(galleryData);
+    async createImage(
+        galleryData: createImageDto,
+        file: Express.Multer.File
+    ) {
+        const newImage = new this.galleryModel({
+            ...galleryData,
+            image: file?.path
+        });
         return newImage.save();
     }
 
