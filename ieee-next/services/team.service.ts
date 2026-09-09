@@ -20,5 +20,24 @@ export async function getTeam() {
         console.error('Error fetching team:', error);
         throw error;
     }
+}
+
+export async function createMember(formData: FormData){
+    try{
+        const response = await fetch(`${API_URL}/team`,{
+            method: 'POST',
+            body: formData,
+        });
+
+        if(!response.ok){
+            const error = await response.json();
+            throw new Error('Error creating new member');
+        }
+        return await response.json();
+    }
+    catch(error){
+        console.error('Error fetching team:', error);
+        throw error;
+    }
 
 }

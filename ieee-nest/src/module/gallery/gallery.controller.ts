@@ -43,11 +43,28 @@ export class GalleryController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update existing Image' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        image: { type: 'string', format: 'binary' },
+        alt: { type: 'string' },
+        category: { type: 'string' },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('image', {
+      dest: './uploads/gallery',
+    }),
+  )
   updateImage(
     @Param('id') id: string,
-    @Body() galleryData: updateImageDto
+    @Body() galleryData: updateImageDto,
+    @UploadedFile() file: Express.Multer.File
   ) {
-    return this.galleryService.updateImage(id, galleryData);
+    return this.galleryService.updateImage(id, galleryData, file);
   }
 
   @Delete(':id')

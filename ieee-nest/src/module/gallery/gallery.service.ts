@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { createImageDto } from './dto/create-image.dto';
 import { updateImageDto } from './dto/update-image.dto';
 
+type UpdateGalleryWithImage = updateImageDto & { image?: string };
+
 @Injectable()
 export class GalleryService {
     constructor(
@@ -27,8 +29,17 @@ export class GalleryService {
         return newImage.save();
     }
 
-    async updateImage(id: string, galleryData: updateImageDto) {
-        const updatedImage = this.galleryModel.findByIdAndUpdate(id, galleryData);
+    async updateImage(id: string, galleryData: updateImageDto, file: Express.Multer.File) {
+        const updateImage: UpdateGalleryWithImage = {
+            ...galleryData,
+        };
+        if (file) {
+            updateImage.image = file.path;
+        }
+        const updatedImage = this.galleryModel.findByIdAndUpdate(id,
+            galleryData,
+            { returnDocument: "after" }
+        ).exec();
         return updatedImage;
     }
 

@@ -252,19 +252,15 @@ export default function AdminPage() {
 
         </div>
 
-
         {/* ================= SECTION HEADER ================= */}
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-
           <div className="flex items-center gap-4">
-
             <div className="w-12 h-12 rounded-xl bg-[#E5F2F8] text-[#00629B] flex items-center justify-center">
               <Icon size={24} />
             </div>
 
             <div>
-
               <h2 className="text-2xl font-bold text-[#001220]">
                 {current.title}
               </h2>
@@ -272,11 +268,8 @@ export default function AdminPage() {
               <p className="text-[#607D8B] text-sm">
                 {current.description}
               </p>
-
             </div>
-
           </div>
-
 
           <button
             onClick={() => setShowForm(!showForm)}
@@ -294,9 +287,7 @@ export default function AdminPage() {
               </>
             )}
           </button>
-
         </div>
-
 
         {/* ================= FORM ================= */}
 
@@ -308,28 +299,23 @@ export default function AdminPage() {
                 onClose={() => setShowForm(false)}
               />
             )}
-
             {section === "events" && (
               <EventForm
                 onClose={() => setShowForm(false)}
               />
             )}
-
             {section === "gallery" && (
               <GalleryForm
                 onClose={() => setShowForm(false)}
               />
             )}
-
             {section === "news" && (
               <NewsForm
                 onClose={() => setShowForm(false)}
               />
             )}
-
           </div>
         )}
-
 
         {/* ================= CONTENT ================= */}
 
@@ -360,18 +346,14 @@ export default function AdminPage() {
             onDelete={handleDelete}
           />
         )}
-
       </main>
-
     </div>
   );
 }
 
-
 /* =========================================================
    TAB
 ========================================================= */
-
 function Tab({
   active,
   icon: Icon,
@@ -387,8 +369,8 @@ function Tab({
     <button
       onClick={onClick}
       className={`flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium transition ${active
-          ? "bg-[#00629B] text-white shadow-sm"
-          : "text-[#607D8B] hover:bg-[#E5F2F8] hover:text-[#00629B]"
+        ? "bg-[#00629B] text-white shadow-sm"
+        : "text-[#607D8B] hover:bg-[#E5F2F8] hover:text-[#00629B]"
         }`}
     >
       <Icon size={18} />
@@ -396,7 +378,6 @@ function Tab({
     </button>
   );
 }
-
 
 /* =========================================================
    MEMBERS
@@ -415,15 +396,10 @@ function MemberTable({
 
   return (
     <div className="bg-white border border-[#DCE8EF] rounded-2xl shadow-sm overflow-hidden">
-
       <div className="overflow-x-auto">
-
         <table className="w-full">
-
           <thead className="bg-[#F3F7FA] border-b border-[#DCE8EF]">
-
             <tr>
-
               <th className="text-left px-6 py-4 text-sm font-semibold text-[#001220]">
                 Name
               </th>
@@ -476,18 +452,12 @@ function MemberTable({
 
               </tr>
             ))}
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 }
-
-
 /* =========================================================
    EVENTS
 ========================================================= */
@@ -827,7 +797,6 @@ function MemberForm({
   );
 }
 
-
 /* =========================================================
    EVENT FORM
 ========================================================= */
@@ -839,9 +808,7 @@ function EventForm({
 }) {
   return (
     <form className="space-y-5">
-
       <div>
-
         <h3 className="text-lg font-semibold text-[#001220]">
           Add Event
         </h3>
@@ -868,7 +835,6 @@ function EventForm({
           label="Status"
           placeholder="Enter event Status"
         />
-
       </div>
 
       <div className="grid md:grid-cols-2 gap-5">
@@ -877,33 +843,25 @@ function EventForm({
           label="Date"
           type="date"
         />
-
         <Input
           label="Time"
           placeholder="Enter event Time"
         />
-
       </div>
       <div className="grid md:grid-cols-2 gap-5">
-
         <Input
           label="Venue"
           placeholder="Enter event venue"
         />
-
         <Input
           label="Description"
           placeholder="Enter event Description"
         />
-
       </div>
-
       <FileInput
         label="Event Image"
       />
-
       <div className="flex justify-end gap-3">
-
         <button
           type="button"
           onClick={onClose}
@@ -911,15 +869,11 @@ function EventForm({
         >
           Cancel
         </button>
-
         <SubmitButton text="Create Event" />
-
       </div>
-
     </form>
   );
 }
-
 
 /* =========================================================
    GALLERY FORM
@@ -949,17 +903,14 @@ function GalleryForm({
         label="Title"
         placeholder="Enter image title"
       />
-
       <Input
         label="Category"
         placeholder="Example: Coding Competitions"
       />
-
       <FileInput
         label="Image"
         accept="image/*"
       />
-
       <div className="flex justify-end gap-3">
 
         <button
@@ -969,20 +920,15 @@ function GalleryForm({
         >
           Cancel
         </button>
-
         <SubmitButton text="Upload Image" />
-
       </div>
-
     </form>
   );
 }
 
-
 /* =========================================================
    NEWS FORM
 ========================================================= */
-
 function NewsForm({
   onClose,
 }: {
@@ -1009,42 +955,33 @@ function NewsForm({
       />
 
       <div className="grid md:grid-cols-2 gap-5">
-
         <Input
           label="Category"
           placeholder="Enter event category"
         />
-
         <Input
           label="Date"
           type="Date"
         />
-
       </div>
-
-        <Input
-          label="Excerpt"
-          placeholder="Enter event Excerpt"
-        />
+      <Input
+        label="Excerpt"
+        placeholder="Enter event Excerpt"
+      />
       <div>
-
         <label className="block text-sm font-medium text-[#001220] mb-2">
           Content
         </label>
-
         <textarea
           rows={5}
           placeholder="Write news Content..."
           className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10 resize-none"
         />
-
       </div>
-
       <FileInput
         label="News Image"
         accept="image/*"
       />
-
       <div className="flex justify-end gap-3">
 
         <button
@@ -1054,15 +991,11 @@ function NewsForm({
         >
           Cancel
         </button>
-
         <SubmitButton text="Create News" />
-
       </div>
-
     </form>
   );
 }
-
 
 /* =========================================================
    INPUT
@@ -1079,21 +1012,17 @@ function Input({
 }) {
   return (
     <div>
-
       <label className="block text-sm font-medium text-[#001220] mb-2">
         {label}
       </label>
-
       <input
         type={type}
         placeholder={placeholder}
         className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10"
       />
-
     </div>
   );
 }
-
 
 /* =========================================================
    FILE INPUT
@@ -1108,7 +1037,6 @@ function FileInput({
 }) {
   return (
     <div>
-
       <label className="block text-sm font-medium text-[#001220] mb-2">
         {label}
       </label>
@@ -1122,7 +1050,6 @@ function FileInput({
     </div>
   );
 }
-
 
 /* =========================================================
    SUBMIT BUTTON
@@ -1143,7 +1070,6 @@ function SubmitButton({
   );
 }
 
-
 /* =========================================================
    EMPTY STATE
 ========================================================= */
@@ -1163,7 +1089,6 @@ function EmptyState({
       <p className="text-[#607D8B]">
         {text}
       </p>
-
     </div>
   );
 }
