@@ -9,7 +9,6 @@ export default function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Add your login API call here
     console.log({ email, password });
   };
 
@@ -20,31 +19,31 @@ export default function LoginPage() {
 
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 sm:p-10">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-7">
 
           {/* Header */}
-          <div className="text-center mb-8">
-            <span className="inline-block px-3 py-1 mb-4 rounded-full bg-[#00629B]/10 text-[#00629B] text-xs font-bold uppercase tracking-widest">
+          <div className="text-center mb-5">
+            <span className="inline-block px-3 py-1 mb-2 rounded-full bg-[#00629B]/10 text-[#00629B] text-xs font-bold uppercase tracking-widest">
               Admin
             </span>
 
-            <h1 className="text-3xl font-black text-[#001220]">
+            <h1 className="text-2xl font-black text-[#001220]">
               Welcome Back
             </h1>
 
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500">
               Sign in to access the admin dashboard
             </p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
 
             {/* Email */}
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-semibold text-[#001220] mb-2"
+                className="block text-sm font-semibold text-[#001220] mb-1.5"
               >
                 Email
               </label>
@@ -52,11 +51,11 @@ export default function LoginPage() {
               <input
                 id="email"
                 type="email"
-                placeholder="admin@example.com"
+                placeholder="admin@ieee.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-200
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200
                 bg-gray-50 text-[#001220] outline-none
                 focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/20
                 transition"
@@ -67,7 +66,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold text-[#001220] mb-2"
+                className="block text-sm font-semibold text-[#001220] mb-1.5"
               >
                 Password
               </label>
@@ -79,7 +78,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 rounded-lg border border-gray-200
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-200
                 bg-gray-50 text-[#001220] outline-none
                 focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/20
                 transition"
@@ -89,7 +88,7 @@ export default function LoginPage() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-lg
+              className="w-full py-2.5 rounded-lg
               bg-[#00629B] hover:bg-[#004F7C]
               text-white font-bold
               transition-all duration-200
@@ -101,7 +100,7 @@ export default function LoginPage() {
           </form>
 
           {/* Footer */}
-          <p className="text-center text-xs text-gray-400 mt-8">
+          <p className="text-center text-xs text-gray-400 mt-5">
             IEEE Student Branch
           </p>
         </div>
