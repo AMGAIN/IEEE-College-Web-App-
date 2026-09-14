@@ -20,3 +20,23 @@ export async function getNews() {
     throw error;
   }
 }
+
+export async function createNews(formData: FormData){
+    try{
+        const response = await fetch(`${API_URL}/news`,{
+            method: 'POST',
+            body: formData,
+        });
+
+        if(!response.ok){
+            const error = await response.json();
+            throw new Error('Error creating new member');
+        }
+        return await response.json();
+    }
+    catch(error){
+        console.error('Error fetching News:', error);
+        throw error;
+    }
+
+}

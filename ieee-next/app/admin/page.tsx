@@ -36,7 +36,9 @@ type News = {
   date: string;
   description: string;
 };
+const handleSubmit=()=>{
 
+}
 export default function AdminPage() {
   const [section, setSection] = useState<Section>("members");
   const [showForm, setShowForm] = useState(false);
@@ -741,7 +743,7 @@ function MemberForm({
   onClose: () => void;
 }) {
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleSubmit()}>
 
       <div>
 
