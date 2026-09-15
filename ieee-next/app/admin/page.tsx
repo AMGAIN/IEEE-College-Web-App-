@@ -7,6 +7,8 @@ import { getEvent } from "@/services/event.service";
 import { getGallery } from "@/services/gallery.service";
 import { getNews } from "@/services/news.service";
 
+import { createMember } from "@/services/team.service";
+
 type Section = "members" | "events" | "gallery" | "news";
 
 type Member = {
@@ -36,9 +38,7 @@ type News = {
   date: string;
   description: string;
 };
-const handleSubmit=()=>{
 
-}
 export default function AdminPage() {
   const [section, setSection] = useState<Section>("members");
   const [showForm, setShowForm] = useState(false);
@@ -742,8 +742,24 @@ function MemberForm({
 }: {
   onClose: () => void;
 }) {
+
+  const handleMemberSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const memberFormData = new FormData(e.currentTarget);
+
+      await createMember(memberFormData);
+
+      onClose();
+    } catch (error) {
+      console.error("Error creating member:", error);
+    }
+  };
   return (
-    <form className="space-y-5" onSubmit={handleSubmit()}>
+    <form className="space-y-5" onSubmit={handleMemberSubmit}>
 
       <div>
 
@@ -761,19 +777,27 @@ function MemberForm({
 
         <Input
           label="Name"
+          name="name"
           placeholder="Enter member name"
         />
 
         <Input
           label="Role"
+          name="position"
           placeholder="Enter role"
         />
 
       </div>
+      <Input
+        label="Department"
+        name="department"
+        placeholder="Enter department"
+      />
 
       <Input
         label="Email"
         type="email"
+        name="email"
         placeholder="Enter email address"
       />
 
@@ -823,6 +847,7 @@ function EventForm({
 
       <Input
         label="Event Title"
+        name="title"
         placeholder="Enter event title"
       />
 
@@ -830,11 +855,13 @@ function EventForm({
 
         <Input
           label="Category"
+          name="category"
           placeholder="Enter event category"
         />
 
         <Input
           label="Status"
+          name="status"
           placeholder="Enter event Status"
         />
       </div>
@@ -843,20 +870,24 @@ function EventForm({
 
         <Input
           label="Date"
+          name="date"
           type="date"
         />
         <Input
           label="Time"
+          name="time"
           placeholder="Enter event Time"
         />
       </div>
       <div className="grid md:grid-cols-2 gap-5">
         <Input
           label="Venue"
+          name="venue"
           placeholder="Enter event venue"
         />
         <Input
           label="Description"
+          name="description"
           placeholder="Enter event Description"
         />
       </div>
@@ -903,10 +934,12 @@ function GalleryForm({
 
       <Input
         label="Title"
+        name="title"
         placeholder="Enter image title"
       />
       <Input
         label="Category"
+        name="category"
         placeholder="Example: Coding Competitions"
       />
       <FileInput
@@ -953,21 +986,25 @@ function NewsForm({
 
       <Input
         label="Title"
+        name="title"
         placeholder="Enter news title"
       />
 
       <div className="grid md:grid-cols-2 gap-5">
         <Input
           label="Category"
+          name="category"
           placeholder="Enter event category"
         />
         <Input
           label="Date"
+          name="date"
           type="Date"
         />
       </div>
       <Input
         label="Excerpt"
+        name="excerpt"
         placeholder="Enter event Excerpt"
       />
       <div>
@@ -1006,10 +1043,12 @@ function NewsForm({
 function Input({
   label,
   placeholder,
+  name,
   type = "text",
 }: {
   label: string;
   placeholder?: string;
+  name: string;
   type?: string;
 }) {
   return (
@@ -1020,6 +1059,7 @@ function Input({
       <input
         type={type}
         placeholder={placeholder}
+        name={name}
         className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10"
       />
     </div>
@@ -1046,6 +1086,7 @@ function FileInput({
       <input
         type="file"
         accept={accept}
+        name = "image"
         className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] bg-white text-sm text-[#607D8B] file:mr-4 file:rounded-lg file:border-0 file:bg-[#E5F2F8] file:px-4 file:py-2 file:text-[#00629B] file:font-medium"
       />
 

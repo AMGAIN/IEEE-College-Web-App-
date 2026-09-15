@@ -21,11 +21,11 @@ export async function getNews() {
   }
 }
 
-export async function createNews(formData: FormData){
+export async function createNews(newsFormData: FormData){
     try{
         const response = await fetch(`${API_URL}/news`,{
             method: 'POST',
-            body: formData,
+            body: newsFormData,
         });
 
         if(!response.ok){

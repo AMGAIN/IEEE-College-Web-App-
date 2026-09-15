@@ -22,11 +22,11 @@ export async function getTeam() {
     }
 }
 
-export async function createMember(formData: FormData){
+export async function createMember(memberFormData: FormData){
     try{
         const response = await fetch(`${API_URL}/team`,{
             method: 'POST',
-            body: formData,
+            body: memberFormData,
         });
 
         if(!response.ok){
