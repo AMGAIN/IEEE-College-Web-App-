@@ -8,6 +8,7 @@ import { getGallery } from "@/services/gallery.service";
 import { getNews } from "@/services/news.service";
 
 import { createMember } from "@/services/team.service";
+import { createNews } from "@/services/news.service";
 
 type Section = "members" | "events" | "gallery" | "news";
 
@@ -969,8 +970,23 @@ function NewsForm({
 }: {
   onClose: () => void;
 }) {
+    const handleNewsSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const newsFormData = new FormData(e.currentTarget);
+
+      await createNews(newsFormData);
+
+      onClose();
+    } catch (error) {
+      console.error("Error creating news:", error);
+    }
+  };
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleNewsSubmit}>
 
       <div>
 
@@ -1014,6 +1030,7 @@ function NewsForm({
         <textarea
           rows={5}
           placeholder="Write news Content..."
+          name="content"
           className="w-full px-4 py-3 rounded-xl border border-[#CFDEE6] outline-none focus:border-[#00629B] focus:ring-2 focus:ring-[#00629B]/10 resize-none"
         />
       </div>
