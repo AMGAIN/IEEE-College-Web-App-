@@ -21,3 +21,22 @@ export async function getGallery() {
   }
 
 }
+
+export async function createImage(GalleryFormData: FormData){
+    try{
+        const response = await fetch(`${API_URL}/gallery`,{
+            method: 'POST',
+            body: GalleryFormData,
+        });
+
+        if(!response.ok){
+            const error = await response.json();
+            throw new Error('Error creating Image in Gallery ');
+        }
+        return await response.json();
+    }
+    catch(error){
+        console.error('Error fetching Image:', error);
+        throw error;
+    }
+}

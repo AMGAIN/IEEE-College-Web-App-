@@ -9,32 +9,34 @@ import { getNews } from "@/services/news.service";
 
 import { createMember } from "@/services/team.service";
 import { createNews } from "@/services/news.service";
+import { createEvent, deleteEvent } from "@/services/event.service";
+import { createImage } from "@/services/gallery.service";
 
 type Section = "members" | "events" | "gallery" | "news";
 
 type Member = {
-  _id: number;
+  _id: string;
   name: string;
   role: string;
   email: string;
 };
 
 type Event = {
-  _id: number;
+  _id: string;
   title: string;
   date: string;
   location: string;
 };
 
 type GalleryImage = {
-  _id: number;
+  _id: string;
   title: string;
   category: string;
   src: string;
 };
 
 type News = {
-  _id: number;
+  _id: string;
   title: string;
   date: string;
   description: string;
@@ -46,13 +48,13 @@ export default function AdminPage() {
 
   const [team, setTeam] = useState<Member[]>([
     {
-      _id: 1,
+      _id: "1",
       name: "Neha Pal",
       role: "Chair",
       email: "nehapal@example.com",
     },
     {
-      _id: 2,
+      _id: "2",
       name: "Jane Doe",
       role: "Secretary",
       email: "jane@example.com",
@@ -61,7 +63,7 @@ export default function AdminPage() {
 
   const [events, setEvents] = useState<Event[]>([
     {
-      _id: 1,
+      _id: "1",
       title: "IEEE Hackathon 2026",
       date: "2026-09-20",
       location: "Everest Engineering College",
@@ -70,7 +72,7 @@ export default function AdminPage() {
 
   const [gallery, setGallery] = useState<GalleryImage[]>([
     {
-      _id: 1,
+      _id: "1",
       title: "Hackathon Night",
       category: "Coding Competitions",
       src: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=600",
@@ -79,7 +81,7 @@ export default function AdminPage() {
 
   const [news, setNews] = useState<News[]>([
     {
-      _id: 1,
+      _id: "1",
       title: "IEEE Student Branch Wins Hackathon",
       date: "2026-08-30",
       description:
@@ -149,7 +151,7 @@ export default function AdminPage() {
     setShowForm(false);
   }
 
-  function handleDelete(_id: number) {
+  async function handleDelete(_id: string) {
     const confirmed = confirm(
       "Are you sure you want to delete this item?"
     );
@@ -163,6 +165,8 @@ export default function AdminPage() {
     }
 
     if (section === "events") {
+      await deleteEvent(_id);
+
       setEvents((prev) =>
         prev.filter((item) => item._id !== _id)
       );
@@ -180,7 +184,6 @@ export default function AdminPage() {
       );
     }
   }
-
   return (
     <div className="min-h-screen bg-[#F3F7FA]">
 
@@ -391,7 +394,7 @@ function MemberTable({
   onDelete,
 }: {
   members: Member[];
-  onDelete: (_id: number) => void;
+  onDelete: (_id: string) => void;
 }) {
   if (members.length === 0) {
     return <EmptyState text="No members found." />;
@@ -470,7 +473,7 @@ function EventTable({
   onDelete,
 }: {
   events: Event[];
-  onDelete: (_id: number) => void;
+  onDelete: (_id: string) => void;
 }) {
   if (events.length === 0) {
     return <EmptyState text="No events found." />;
@@ -556,7 +559,7 @@ function GalleryGrid({
   onDelete,
 }: {
   gallery: GalleryImage[];
-  onDelete: (_id: number) => void;
+  onDelete: (_id: string) => void;
 }) {
   if (gallery.length === 0) {
     return <EmptyState text="No gallery images found." />;
@@ -625,7 +628,7 @@ function NewsTable({
   onDelete,
 }: {
   news: News[];
-  onDelete: (_id: number) => void;
+  onDelete: (_id: string) => void;
 }) {
   if (news.length === 0) {
     return <EmptyState text="No news found." />;
@@ -833,8 +836,23 @@ function EventForm({
 }: {
   onClose: () => void;
 }) {
+    const handleEventSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const eventFormData = new FormData(e.currentTarget);
+
+      await createEvent(eventFormData);
+
+      onClose();
+    } catch (error) {
+      console.error("Error creating Event:", error);
+    }
+  };
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleEventSubmit}>
       <div>
         <h3 className="text-lg font-semibold text-[#001220]">
           Add Event
@@ -918,8 +936,23 @@ function GalleryForm({
 }: {
   onClose: () => void;
 }) {
+    const handleGallerySubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    try {
+      const galleryFormData = new FormData(e.currentTarget);
+
+      await createImage(galleryFormData);
+
+      onClose();
+    } catch (error) {
+      console.error("Error Uploading Image:", error);
+    }
+  };
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleGallerySubmit}>
 
       <div>
 
