@@ -41,3 +41,22 @@ export async function createMember(memberFormData: FormData){
     }
 
 }
+
+export async function deleteMember(id: string) {
+    try {
+        const response = await fetch(`${API_URL}/team/${id}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            console.error("Backend error:", error);
+            throw new Error("Error deleting Team");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error deleting Team:", error);
+        throw error;
+    }
+}

@@ -40,3 +40,22 @@ export async function createNews(newsFormData: FormData){
     }
 
 }
+
+export async function deleteNews(id: string) {
+    try {
+        const response = await fetch(`${API_URL}/news/${id}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            console.error("Backend error:", error);
+            throw new Error("Error deleting News");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error deleting News:", error);
+        throw error;
+    }
+}

@@ -7,10 +7,10 @@ import { getEvent } from "@/services/event.service";
 import { getGallery } from "@/services/gallery.service";
 import { getNews } from "@/services/news.service";
 
-import { createMember } from "@/services/team.service";
-import { createNews } from "@/services/news.service";
+import { createMember, deleteMember } from "@/services/team.service";
+import { createNews, deleteNews } from "@/services/news.service";
 import { createEvent, deleteEvent } from "@/services/event.service";
-import { createImage } from "@/services/gallery.service";
+import { createImage, deletePhoto } from "@/services/gallery.service";
 
 type Section = "members" | "events" | "gallery" | "news";
 
@@ -159,6 +159,8 @@ export default function AdminPage() {
     if (!confirmed) return;
 
     if (section === "members") {
+      await deleteMember(_id);
+
       setTeam((prev) =>
         prev.filter((item) => item._id !== _id)
       );
@@ -173,12 +175,16 @@ export default function AdminPage() {
     }
 
     if (section === "gallery") {
+
+      await deletePhoto(_id);
       setGallery((prev) =>
         prev.filter((item) => item._id !== _id)
       );
     }
 
     if (section === "news") {
+      await deleteNews(_id);
+
       setNews((prev) =>
         prev.filter((item) => item._id !== _id)
       );

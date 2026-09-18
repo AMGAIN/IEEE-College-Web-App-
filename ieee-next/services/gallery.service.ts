@@ -22,21 +22,41 @@ export async function getGallery() {
 
 }
 
-export async function createImage(GalleryFormData: FormData){
-    try{
-        const response = await fetch(`${API_URL}/gallery`,{
-            method: 'POST',
-            body: GalleryFormData,
-        });
+export async function createImage(GalleryFormData: FormData) {
+  try {
+    const response = await fetch(`${API_URL}/gallery`, {
+      method: 'POST',
+      body: GalleryFormData,
+    });
 
-        if(!response.ok){
-            const error = await response.json();
-            throw new Error('Error creating Image in Gallery ');
-        }
-        return await response.json();
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error('Error creating Image in Gallery ');
     }
-    catch(error){
-        console.error('Error fetching Image:', error);
-        throw error;
+    return await response.json();
+  }
+  catch (error) {
+    console.error('Error fetching Image:', error);
+    throw error;
+  }
+}
+
+export async function deletePhoto(id: string) {
+  try {
+    const response = await fetch(`${API_URL}/news/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Backend error:", error);
+      throw new Error("Error deleting News");
     }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error deleting News:", error);
+    throw error;
+  }
+
 }
