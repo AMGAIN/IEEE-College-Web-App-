@@ -43,12 +43,12 @@ export async function createImage(GalleryFormData: FormData) {
 
 export async function deletePhoto(id: string) {
   try {
-    const response = await fetch(`${API_URL}/news/${id}`, {
+    const response = await fetch(`${API_URL}/gallery/${id}`, {
       method: "DELETE",
     });
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = await response.text();
       console.error("Backend error:", error);
       throw new Error("Error deleting News");
     }

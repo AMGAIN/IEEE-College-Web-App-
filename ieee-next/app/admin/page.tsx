@@ -30,9 +30,9 @@ type Event = {
 
 type GalleryImage = {
   _id: string;
-  title: string;
+  alt: string;
   category: string;
-  src: string;
+  image: string;
 };
 
 type News = {
@@ -73,9 +73,9 @@ export default function AdminPage() {
   const [gallery, setGallery] = useState<GalleryImage[]>([
     {
       _id: "1",
-      title: "Hackathon Night",
+      alt: "Hackathon Night",
       category: "Coding Competitions",
-      src: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=600",
+      image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=600",
     },
   ]);
 
@@ -574,17 +574,17 @@ function GalleryGrid({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      {gallery.map((image) => (
+      {gallery.map((img) => (
         <div
-          key={image._id}
+          key={img._id}
           className="bg-white border border-[#DCE8EF] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition"
         >
 
           <div className="aspect-video overflow-hidden bg-[#F3F7FA]">
 
             <img
-              src={image.src}
-              alt={image.title}
+              src={img.image}
+              alt={img.alt}
               className="w-full h-full object-cover hover:scale-105 transition duration-300"
             />
 
@@ -597,17 +597,17 @@ function GalleryGrid({
               <div>
 
                 <h3 className="font-semibold text-[#001220]">
-                  {image.title}
+                  {img.alt}
                 </h3>
 
                 <p className="text-sm text-[#607D8B] mt-1">
-                  {image.category}
+                  {img.category}
                 </p>
 
               </div>
 
               <button
-                onClick={() => onDelete(image._id)}
+                onClick={() => onDelete(img._id)}
                 className="p-2 rounded-lg text-red-500 hover:bg-red-50 transition"
               >
                 <Trash2 size={17} />

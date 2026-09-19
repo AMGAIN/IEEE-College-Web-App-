@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { getGallery } from "@/services/gallery.service";
 
 type GalleryImage = {
-  _id: string | number;
+  _id: string ;
   image: string;
   alt: string;
   category: string;
