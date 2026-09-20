@@ -42,6 +42,28 @@ export async function createMember(memberFormData: FormData){
 
 }
 
+export async function updateEvent(
+  id: string,
+  EventFormData: FormData
+) {
+  try {
+    const response = await fetch(`${API_URL}/event/${id}`, {
+      method: "PUT",
+      body: EventFormData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Backend error:", error);
+      throw new Error("Error updating Event");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(" Error Updating Event: ", error);
+    throw error;
+  }
+}
+
 export async function deleteMember(id: string) {
     try {
         const response = await fetch(`${API_URL}/team/${id}`, {
