@@ -42,24 +42,24 @@ export async function createMember(memberFormData: FormData){
 
 }
 
-export async function updateEvent(
+export async function updateTeam(
   id: string,
-  EventFormData: FormData
+  TeamFormData: FormData
 ) {
   try {
-    const response = await fetch(`${API_URL}/event/${id}`, {
+    const response = await fetch(`${API_URL}/team/${id}`, {
       method: "PUT",
-      body: EventFormData,
+      body: TeamFormData,
     });
 
     if (!response.ok) {
       const error = await response.json();
       console.error("Backend error:", error);
-      throw new Error("Error updating Event");
+      throw new Error("Error updating Team");
     }
     return await response.json();
   } catch (error) {
-    console.error(" Error Updating Event: ", error);
+    console.error(" Error Updating Team: ", error);
     throw error;
   }
 }
