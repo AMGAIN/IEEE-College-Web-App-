@@ -41,6 +41,28 @@ export async function createImage(GalleryFormData: FormData) {
   }
 }
 
+export async function updateGallery(
+  id: string,
+  GalleryFormData: FormData
+) {
+  try {
+    const response = await fetch(`${API_URL}/gallery/${id}`, {
+      method: "PUT",
+      body: GalleryFormData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Backend error:", error);
+      throw new Error("Error updating gallery");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(" Error Updating gallery: ", error);
+    throw error;
+  }
+}
+
 export async function deletePhoto(id: string) {
   try {
     const response = await fetch(`${API_URL}/gallery/${id}`, {
