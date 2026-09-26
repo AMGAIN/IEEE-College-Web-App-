@@ -111,45 +111,13 @@ export default function Membership() {
                     scale: 1.02,
                     transition: { duration: 0.25 },
                   }}
-                  className="
-        group
-        relative
-        overflow-hidden
-        rounded-2xl
-        p-6
-        bg-gradient-to-br
-        from-[#062B52]
-        via-[#0A3D73]
-        to-[#00629B]
-        border border-blue-700/40
-        shadow-lg
-        hover:shadow-blue-900/40
-        transition-all
-        duration-300
-      ">
+                  className="group relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br from-[#062B52] via-[#0A3D73] to-[#00629B] border border-blue-700/40 shadow-lg hover:shadow-blue-900/40 transition-all duration-300">
                   {/* Decorative Glow */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
 
                   {/* Icon */}
                   <div
-                    className="
-          relative
-          z-10
-          w-14
-          h-14
-          rounded-xl
-          bg-white/10
-          backdrop-blur-sm
-          border border-white/10
-          flex
-          items-center
-          justify-center
-          mb-5
-          group-hover:bg-white
-          transition-all
-          duration-300
-        "
-                  >
+                    className=" relative z-10 w-14 h-14 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center mb-5 group-hover:bg-white transition-all duration-300">
                     <Icon className="w-7 h-7 text-white group-hover:text-[#00629B]" />
                   </div>
 
@@ -165,18 +133,7 @@ export default function Membership() {
 
                   {/* Bottom Accent */}
                   <div
-                    className="
-          absolute
-          bottom-0
-          left-0
-          h-1
-          w-0
-          bg-white
-          group-hover:w-full
-          transition-all
-          duration-300
-        "
-                  />
+                    className=" absolute bottom-0 left-0 h-1 w-0 bg-white group-hover:w-full transition-all duration-300"/>
                 </motion.div>
               );
             })}
@@ -203,49 +160,13 @@ export default function Membership() {
                   scale: 1.02,
                   transition: { duration: 0.25 },
                 }}
-                className="
-      group
-      relative
-      overflow-hidden
-      rounded-2xl
-      p-6
-      bg-gradient-to-br
-      from-[#062B52]
-      via-[#0A3D73]
-      to-[#00629B]
-      border border-blue-700/40
-      shadow-lg
-      hover:shadow-blue-900/40
-      transition-all
-      duration-300
-      flex
-      gap-5
-      items-start
-    "
-              >
+                className=" group relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br from-[#062B52] via-[#0A3D73] to-[#00629B] border border-blue-700/40 shadow-lg hover:shadow-blue-900/40 transition-all duration-300 flex gap-5 items-start">
                 {/* Background Glow */}
                 <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-blue-400/10 blur-3xl group-hover:bg-blue-400/20 transition-all duration-300" />
 
                 {/* Step Number */}
                 <div
-                  className="
-        relative
-        z-10
-        w-14
-        h-14
-        rounded-xl
-        bg-white/10
-        backdrop-blur-sm
-        border border-white/10
-        flex
-        items-center
-        justify-center
-        flex-shrink-0
-        transition-all
-        duration-300
-        group-hover:bg-white
-      "
-                >
+                  className=" relative z-10  w-14 h-14 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-white">
                   <span className="text-lg font-black text-white group-hover:text-[#00629B]">
                     {s.step}
                   </span>
@@ -264,18 +185,7 @@ export default function Membership() {
 
                 {/* Bottom Accent */}
                 <div
-                  className="
-        absolute
-        bottom-0
-        left-0
-        h-1
-        w-0
-        bg-white
-        group-hover:w-full
-        transition-all
-        duration-300
-      "
-                />
+                  className=" absolute bottom-0 left-0 h-1 w-0 bg-white group-hover:w-full transition-all duration-300"/>
               </motion.div>
             ))}
           </motion.div>
