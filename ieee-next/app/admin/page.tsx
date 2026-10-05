@@ -52,13 +52,7 @@ export default function AdminPage() {
       name: "Neha Pal",
       role: "Chair",
       email: "nehapal@example.com",
-    },
-    {
-      _id: "2",
-      name: "Jane Doe",
-      role: "Secretary",
-      email: "jane@example.com",
-    },
+    }
   ]);
 
   const [events, setEvents] = useState<Event[]>([
