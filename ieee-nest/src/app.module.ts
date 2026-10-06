@@ -11,6 +11,8 @@ import { TeamModule } from './module/team/team.module';
 import { MembershipModule } from './module/membership/membership.module';
 import { HomeModule } from './module/home/home.module';
 import { AboutModule } from './module/about/about.module';
+import { AuthModule } from './module/auth/auth.module';
+import { UserModule } from './module/user/user.module';
 
 @Module({
   imports: [
@@ -31,7 +33,9 @@ import { AboutModule } from './module/about/about.module';
     TeamModule,
     MembershipModule,
     HomeModule,
-    AboutModule
+    AboutModule,
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
