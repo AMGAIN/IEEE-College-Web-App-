@@ -6,5 +6,4 @@ export class LoginDto{
 
     @ApiProperty()
     password!: string
-
 }

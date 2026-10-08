@@ -1,15 +1,36 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { login } from "@/services/auth.service";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({ email, password });
+    setError("");
+    setLoading(true);
+
+    try {
+      const data = await login({ email, password });
+      console.log("Login successful: ", data);
+      router.push("/");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Login failed");
+      }
+    } finally {
+      setLoading(false);
+    }
+
   };
 
   return (
@@ -105,6 +126,11 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+      {error && (
+        <div className="mb-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
+          {error}
+        </div>
+      )}
     </main>
   );
 }
