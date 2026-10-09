@@ -20,8 +20,9 @@ export default function LoginPage() {
     try {
       const data = await login({ email, password });
       console.log("Login successful: ", data);
-      router.push("/");
-    } catch (error) {
+      router.push("/admin");
+    }
+    catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
@@ -125,12 +126,12 @@ export default function LoginPage() {
             IEEE Student Branch
           </p>
         </div>
+        {error && (
+          <div className="mb-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
+            {error}
+          </div>
+        )}
       </div>
-      {error && (
-        <div className="mb-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
-          {error}
-        </div>
-      )}
     </main>
   );
 }
