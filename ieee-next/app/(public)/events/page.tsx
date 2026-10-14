@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { getEvent } from "@/services/event.service";
 
 type Event = {
-  _id: string | number;
+  _id: string ;
   image: string;
   title: string;
   category: string;

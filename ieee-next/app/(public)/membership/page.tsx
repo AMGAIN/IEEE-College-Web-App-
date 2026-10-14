@@ -15,7 +15,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 const BENEFIT_ICONS = [Globe, BookOpen, Award, Star, Users, Zap];
 
 type Benefit = {
-  _id: string | number;
+  _id: string ;
   title: string;
   description: string;
 }
@@ -152,7 +152,7 @@ export default function Membership() {
             initial="hidden"
             className="space-y-6"
           >
-            {STEPS.map((s, i) => (
+            {STEPS.map((s) => (
               <motion.div
                 key={s.step}
                 whileHover={{

@@ -15,12 +15,7 @@ type NewsArticle = {
   content: string;
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
-};
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09 } } };
-
 
 export default function News() {
   const [category, setCategory] = useState("All");
@@ -36,7 +31,6 @@ export default function News() {
         console.error("Failed to load news:", error);
       }
     }
-
     loadNews();
   }, []);
   const CATEGORIES = [
@@ -44,7 +38,6 @@ export default function News() {
     ...Array.from(new Set(news.map((n) => n.category))),
   ];
   const filtered = category === "All" ? news : news.filter((n) => n.category === category);
-
 
   return (
     <>

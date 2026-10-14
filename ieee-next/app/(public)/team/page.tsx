@@ -7,7 +7,7 @@ import PageHero from "@/components/PageHero";
 import { getTeam } from "@/services/team.service";
 
 type TeamMember = {
-  _id: string | number;
+  _id: string ;
   name: string;
   position: string;
   department: string;
@@ -32,10 +32,9 @@ const ROLES_ORDER = [
 ];
 
 export default function Committee() {
-  // Store team members received from the backend
+
   const [team, setTeam] = useState<TeamMember[]>([]);
 
-  // Fetch team data when the page loads
   useEffect(() => {
     async function loadTeam() {
       try {
@@ -45,7 +44,6 @@ export default function Committee() {
         console.error("Failed to load team:", error);
       }
     }
-
     loadTeam();
   }, []);
 
